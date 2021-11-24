@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31624.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationWebEvenements", "ApplicationWebEvenements\ApplicationWebEvenements.csproj", "{876D1257-36F2-493A-8A2C-265C5BD79678}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationWebEvenements", "ApplicationWebEvenements\ApplicationWebEvenements.csproj", "{876D1257-36F2-493A-8A2C-265C5BD79678}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PFservice", "..\..\projet-finale-service-web\PFservice\PFservice\PFservice.csproj", "{F6585D45-C714-4572-BB8C-D9150D4EAC97}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{876D1257-36F2-493A-8A2C-265C5BD79678}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{876D1257-36F2-493A-8A2C-265C5BD79678}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{876D1257-36F2-493A-8A2C-265C5BD79678}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F6585D45-C714-4572-BB8C-D9150D4EAC97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F6585D45-C714-4572-BB8C-D9150D4EAC97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F6585D45-C714-4572-BB8C-D9150D4EAC97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F6585D45-C714-4572-BB8C-D9150D4EAC97}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,12 @@
+﻿using System;
+using System.Collections.Generic;
+
+
+namespace ApplicationWebEvenements.Models
+{
+    public class Utilisateurevenement
+    {
+        public int IdEvenement { get; set; }
+        public int IdUtilisateur { get; set; }
+    }
+}

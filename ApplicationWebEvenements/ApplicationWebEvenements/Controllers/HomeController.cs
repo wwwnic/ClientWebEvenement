@@ -12,15 +12,17 @@ namespace ApplicationWebEvenements.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ApiClient _client;
 
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
+            _client = new ApiClient();
         }
 
         public IActionResult Index()
         {
-            return View();
+            return View(_client.GetAllUtilisateurs());
         }
 
         public IActionResult Privacy()
