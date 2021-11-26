@@ -15,22 +15,17 @@ namespace ApplicationWebEvenements.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ApiClient _client;
-        private readonly IHubContext<EvenementsHub> _evenementsHubContext;
 
-        public HomeController(ILogger<HomeController> logger,IHubContext<EvenementsHub> evenementsHubContext)
+        public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
             _client = new ApiClient();
-            _evenementsHubContext = evenementsHubContext;
         }
 
         public async Task<IActionResult> Index()
         {
-            var message = await _client.GetAllEvenements();
-            await _evenementsHubContext.Clients.All.SendAsync("refreshEvenements", message);
             return View();
         }
-
 
         public IActionResult Privacy()
         {

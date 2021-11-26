@@ -6,17 +6,23 @@ namespace ApplicationWebEvenements.Hubs
 {
     public class EvenementsHub : Hub
     {
-        private readonly ApiClient _client;
+        private readonly ApiClient _client = new ApiClient();
+        private static string reponseListe = "";
 
-        public EvenementsHub(ApiClient client)
+        public override async Task OnConnectedAsync()
         {
-            _client = client;
+            await Clients.All.SendAsync("actionRafraichir", reponseListe);
         }
 
-        public async Task RefreshEvenements(string message)
+        public async Task RafraichirEvenements()
         {
-            //var message = await _client.GetAllEvenements();
-            await Clients.All.SendAsync("refreshEvenements", message);
+            var message = await _client.GetEvenementsRecents();
+            if (message.Length != reponseListe.Length)
+            {
+                reponseListe = message;
+                await Clients.All.SendAsync("actionRafraichir", message);
+            }
+            await Clients.All.SendAsync("actionRafraichir", "");
         }
     }
 }

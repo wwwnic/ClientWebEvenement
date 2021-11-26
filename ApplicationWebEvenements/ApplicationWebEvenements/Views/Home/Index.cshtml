@@ -1,26 +1,17 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Home Page";
-
 }
 
 <div class="container text-center">
-    <h1 class="display-4">Liste événements</h1>
-    <p id="tableEvenements">
+    <div class="row justify-content-center">
+        <h1 class="display-4">Liste événements</h1>
+        <table class="table">
+            <tbody id="tableEvenements">
 
-    </p>
-    <div class="row">
-        <div class="col-6">
-            <input type="button" id="refreshButton" value="Refresh" />
-        </div>
+            </tbody>
+        </table>
     </div>
 </div>
-<script>
-    function ready() {
-        var userId = Math.floor((Math.random() * 100) + 1);
-        document.addEventListener("DOMContentLoaded", ready);
-    }
-</script>
 <script src="~/js/signalr/signalr.js"></script>
 <script src="~/js/signalr/refresh.js"></script>
         

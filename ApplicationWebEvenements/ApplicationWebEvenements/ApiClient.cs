@@ -1,9 +1,4 @@
-﻿using ApplicationWebEvenements.Models;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace ApplicationWebEvenements
@@ -19,15 +14,13 @@ namespace ApplicationWebEvenements
             _url = "http://10.0.0.149:23784/api/";
         }
 
-        public async Task<string> GetAllEvenements()
+        public async Task<string> GetEvenementsRecents()
         {
-            //List<Evenement> evenements = new List<Evenement>();
             var reponse = await _httpClient.GetAsync(_url + "Evenement/GetRecent");
             var reponseJson = "";
             if (reponse.IsSuccessStatusCode)
             {
                 reponseJson = await reponse.Content.ReadAsStringAsync();
-                //evenements = (List<Evenement>)JsonConvert.DeserializeObject(reponseJson);
             }
             return reponseJson;
         }

@@ -2,27 +2,25 @@
 
 var connection = new signalR.HubConnectionBuilder().withUrl("/evenementsHub").build();
 
-
-connection.on("refreshEvenements", function (message) {
-    //var elementTable = document.createElement("tr");
-    document.getElementById("tableEvenements").innerHTML = message;
-    //var listeEvenements = JSON.parse(message);
-    //for (var e in listeEvenements) {
-        //elementTable.innerHTML = e.nomEvenement;
-        //document.getElementById("tableEvenements").appendChild(elementTable);
-    //}
+connection.on("actionRafraichir", function (message) {
+    if (message != "") {
+        var listeEvenement = JSON.parse(message);
+        var table = document.getElementById("tableEvenements");
+        table.innerHTML = "";
+        for (var e of listeEvenement) {
+            var rangeeTable = document.createElement("tr");
+            var elementTable = document.createElement("td");
+            rangeeTable.appendChild(elementTable);
+            table.appendChild(rangeeTable);
+            elementTable.textContent = `${e.nomEvenement}`;
+        }
+    }
 });
 
-
-
-connection.start().catch(function (err) {
-    return console.error(err.toString());
-});
-
-document.getElementById("refreshButton").addEventListener("click", function (event) {
-    var message = "wow";
-    connection.invoke("refreshEvenements",message).catch(function (err) {
+connection.start().then(window.setInterval(function () {
+    connection.invoke("RafraichirEvenements").catch(function (err) {
         return console.error(err.toString());
-    });
-    event.preventDefault();
+    })
+}, 1500)).catch(function (err) {
+    return console.error(err.toString());
 });
