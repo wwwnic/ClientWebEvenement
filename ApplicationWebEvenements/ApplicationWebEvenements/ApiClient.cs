@@ -16,16 +16,20 @@ namespace ApplicationWebEvenements
         public ApiClient()
         {
             _httpClient = new HttpClient();
-            _url = "http://localhost:23784/api/";
+            _url = "http://10.0.0.149:23784/api/";
         }
 
-        public async Task<IEnumerable<Utilisateur>> GetAllUtilisateurs()
+        public async Task<string> GetAllEvenements()
         {
-            List<Utilisateur> utilisateurs = new List<Utilisateur>();
-            var reponse = await _httpClient.GetAsync(_url + "Utilisateur/GetAll");
-            string responseJson = await reponse.Content.ReadAsStringAsync();
-            utilisateurs = JsonConvert.DeserializeObject<List<Utilisateur>>(responseJson);
-            return utilisateurs;
+            //List<Evenement> evenements = new List<Evenement>();
+            var reponse = await _httpClient.GetAsync(_url + "Evenement/GetRecent");
+            var reponseJson = "";
+            if (reponse.IsSuccessStatusCode)
+            {
+                reponseJson = await reponse.Content.ReadAsStringAsync();
+                //evenements = (List<Evenement>)JsonConvert.DeserializeObject(reponseJson);
+            }
+            return reponseJson;
         }
     }
 }

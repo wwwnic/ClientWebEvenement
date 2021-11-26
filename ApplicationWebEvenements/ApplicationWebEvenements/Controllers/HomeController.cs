@@ -1,5 +1,7 @@
-﻿using ApplicationWebEvenements.Models;
+﻿using ApplicationWebEvenements.Hubs;
+using ApplicationWebEvenements.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -13,17 +15,22 @@ namespace ApplicationWebEvenements.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ApiClient _client;
+        private readonly IHubContext<EvenementsHub> _evenementsHubContext;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger,IHubContext<EvenementsHub> evenementsHubContext)
         {
             _logger = logger;
             _client = new ApiClient();
+            _evenementsHubContext = evenementsHubContext;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(_client.GetAllUtilisateurs());
+            var message = await _client.GetAllEvenements();
+            await _evenementsHubContext.Clients.All.SendAsync("refreshEvenements", message);
+            return View();
         }
+
 
         public IActionResult Privacy()
         {

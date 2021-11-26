@@ -1,17 +1,26 @@
-﻿@model IEnumerable<Utilisateur>;
+﻿
 @{
     ViewData["Title"] = "Home Page";
 
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    <table>
-        @foreach (var u in Model)
-        {
-            <tr>@u.NomUtilisateur</tr>
-            <tr>@u.DateCreation</tr>
-        }
-    </table>
+<div class="container text-center">
+    <h1 class="display-4">Liste événements</h1>
+    <p id="tableEvenements">
+
+    </p>
+    <div class="row">
+        <div class="col-6">
+            <input type="button" id="refreshButton" value="Refresh" />
+        </div>
+    </div>
 </div>
+<script>
+    function ready() {
+        var userId = Math.floor((Math.random() * 100) + 1);
+        document.addEventListener("DOMContentLoaded", ready);
+    }
+</script>
+<script src="~/js/signalr/signalr.js"></script>
+<script src="~/js/signalr/refresh.js"></script>
+        
