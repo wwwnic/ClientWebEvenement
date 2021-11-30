@@ -1,5 +1,7 @@
-﻿using ApplicationWebEvenements.Models;
+﻿using ApplicationWebEvenements.Hubs;
+using ApplicationWebEvenements.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -12,13 +14,15 @@ namespace ApplicationWebEvenements.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ApiClient _client;
 
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
+            _client = new ApiClient();
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             return View();
         }
