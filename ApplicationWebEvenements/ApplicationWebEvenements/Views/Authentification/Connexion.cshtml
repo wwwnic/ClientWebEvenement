@@ -1,0 +1,49 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<head>
+    <style>
+        fieldset {
+            background-color: #f1f1f1;
+            border: none;
+            border-radius: 2px;
+            margin-bottom: 12px;
+            overflow: hidden;
+            padding: 0 .625em;
+        }
+
+        label {
+            cursor: pointer;
+            display: inline-block;
+            padding: 3px 6px;
+            text-align: right;
+            width: 150px;
+            vertical-align: top;
+        }
+
+        input {
+            font-size: inherit;
+        }
+    </style>
+</head>
+<body>
+    <div style="text-align: center;">
+        <form action="/Authentification/Connexion" method="post">
+            <div>
+                <h2>Connexion</h2>
+                <label>
+                    <strong>Nom utilisateur</strong>
+                    <br />
+                </label><input name="conom" type="text" />
+                <br />
+                <label>
+                    <strong> Mot de passe</strong>
+                </label><input name="comdp" type="Password" />
+                <br /><br />
+                <button>Connexion</button>
+            </div>
+        </form>
+    </div>
+</body>

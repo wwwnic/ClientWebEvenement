@@ -1,0 +1,46 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<head>
+    <style>
+        fieldset {
+            background-color: #f1f1f1;
+            border: none;
+            border-radius: 2px;
+            margin-bottom: 12px;
+            overflow: hidden;
+            padding: 0 .625em;
+        }
+
+        label {
+            cursor: pointer;
+            display: inline-block;
+            padding: 3px 6px;
+            text-align: right;
+            width: 200px;
+            vertical-align: top;
+        }
+
+        input {
+            font-size: inherit;
+        }
+    </style>
+</head>
+<body>
+    <div style="text-align: center;">
+        <form action="/Authentification/Enregistrement" method="post">
+            <div>
+                <h2>Enregistrement</h2>
+                <label for="ennom"><strong>Nom utilisateur</strong></label><input name="ennom" type="text" />
+                <br />
+                <label for="psw"><strong>Mot de passe</strong></label><input name="enmdp1" type="password" />
+                <br />
+                <label for="psw-repeat"><strong>Valider mot de passe</strong></label><input name="enmdp2" type="password" />
+                <br /><br />
+                <button>Enregistrement</button>
+            </div>
+        </form>
+    </div>
+</body>

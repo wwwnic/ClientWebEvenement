@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Succes";
+}
+<body>
+    <h2 style="text-align: center;">
+        @ViewBag.messageSucces
+    </h2>
+    @{
+        if (ViewBag.estMaintenantEnregistre)
+        {
+            <br />
+            <br />
+            <div>
+                <hr />
+                <div>
+                    @Html?.Partial("Connexion.cshtml");
+                </div>
+                <hr />
+            </div>
+        }
+    }
+
+</body>

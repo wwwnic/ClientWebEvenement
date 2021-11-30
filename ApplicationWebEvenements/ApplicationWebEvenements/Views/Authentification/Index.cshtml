@@ -1,0 +1,20 @@
+﻿@{
+ViewData["Title"] = "Authentification";
+}
+<body>
+    <p style="text-align: center;">
+        Le site évèn vous permettra de créer et gérer vos propres évènements
+        en plus de pouvoir les partager avec les gens de votre région.
+        Soyez en charge de tout en passant par la création, le suivi et l’exécution,
+        nous serons capables de répondre à vos attentes que vous organisiez
+        des petits évènements de quartier ou un festival grandiose.
+    </p>
+    <hr />
+    <div>
+        @Html.Partial("Connexion.cshtml")
+        <br />
+        <hr />
+        @Html.Partial("Enregistrement.cshtml")
+    </div>
+    <hr />
+</body>
