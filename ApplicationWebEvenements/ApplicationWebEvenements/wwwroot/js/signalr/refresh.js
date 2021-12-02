@@ -13,7 +13,17 @@ connection.on("actionRafraichir", function (message) {
             rangeeTable.appendChild(elementTable);
             table.appendChild(rangeeTable);
             elementTable.textContent = `${e.nomEvenement}`;
+
+            elementTable.onclick = function (e) {
+                return function () {
+                    window.location.replace("http://localhost:64213/détail/index/" + e.idEvenement);
+                };
+            }(e);
         }
+
+        
+
+
     }
 });
 
