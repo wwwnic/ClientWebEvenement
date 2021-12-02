@@ -1,8 +1,8 @@
 ﻿using ApplicationWebEvenements.Models;
-using Newtonsoft.Json;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Text.Json;
 
 namespace ApplicationWebEvenements
 {
@@ -14,52 +14,77 @@ namespace ApplicationWebEvenements
         public ApiClient()
         {
             _httpClient = new HttpClient();
-            _url = "http://192.168.0.107:44312/api/";
+            _url = "http://10.0.0.149:23784/";
+            _httpClient.DefaultRequestHeaders.Add("ApiKey", "c72e11b4-3118-49a7-999a-e9895d94ad5d");
         }
 
-        public Task<string> GetEvenementsRecents()
+        public async Task<string> GetEvenementsRecentsEnJson()
         {
-            return ExecuterGetRequete("Evenement/GetRecent");
-        }
-
-        public string PostConnexion(Utilisateur utilisateur)
-        {
-            var UrlSuffix = "Utilisateur/Login";
-            var reponse = ExecuterPostRequete(UrlSuffix, utilisateur).Result;
-            return reponse;
-        }
-
-        public string getEvenementParID(int id)
-        {
-            var UrlSuffix = "Evenement/GetById/" + id;
-            var reponse = ExecuterGetRequete(UrlSuffix).Result;
-            return reponse;
-        }
-
-        private async Task<string> ExecuterGetRequete(string urlSuffix)
-        {
-            var reponse = await _httpClient.GetAsync(_url + urlSuffix);
-            var reponseJson = "";
-            if (reponse.IsSuccessStatusCode)
-            {
-                reponseJson = await reponse.Content.ReadAsStringAsync();
-            }
+            var reponse = await _httpClient.GetAsync(_url + "api/Evenement/GetRecent");
+            var reponseJson = await reponse.Content.ReadAsStringAsync();
             return reponseJson;
         }
 
-        private async Task<string> ExecuterPostRequete(string urlSuffix, object model)
+        public async Task<List<Evenement>> GetEvenementsRecents()
         {
-            var json = JsonConvert.SerializeObject(model);
-            var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
-            var reponse = await _httpClient.PostAsync(_url + urlSuffix, stringContent);
+            var reponse = await _httpClient.GetAsync(_url + "api/Evenement/GetRecent");
+            List<Evenement> evenements = new List<Evenement>();
             if (reponse.IsSuccessStatusCode)
             {
-                return await reponse.Content.ReadAsStringAsync();
+                var reponseJson = await reponse.Content.ReadAsStringAsync();
+                evenements = JsonSerializer.Deserialize<List<Evenement>>(reponseJson);
+                foreach (Evenement e in evenements)
+                {
+                    //e.IdOrganisateur = await GetUtilisateurParId(e.IdOrganisateur);
+                    //e.LienImage = GetImageEvenement(e.IdEvenement);
+                }
+            }
+            return evenements;
+        }
+
+        public async Task<Evenement> GetEvenementParId(int idEvenement)
+        {
+            var reponse = await _httpClient.GetAsync(_url + "api/Evenement/GetById?id=" + idEvenement);
+            Evenement evenement;
+            if (reponse.IsSuccessStatusCode)
+            {
+                var reponseJson = await reponse.Content.ReadAsStringAsync();
+                evenement = JsonSerializer.Deserialize<Evenement>(reponseJson);
+                //evenement.IdOrganisateur = await GetUtilisateurParId(evenement.IdOrganisateur);
+                //evenement.LienImage = GetImageEvenement(evenement.IdEvenement);
             }
             else
             {
-                return "";
+                evenement = null;
             }
+            return evenement;
+        }
+
+        public async Task<Utilisateur> GetUtilisateurParId(int idUtilisateur)
+        {
+            var reponse = await _httpClient.GetAsync(_url + "api/Utilisateur/GetById?id=" + idUtilisateur);
+            Utilisateur utilisateur;
+            if (reponse.IsSuccessStatusCode)
+            {
+                var reponseJson = await reponse.Content.ReadAsStringAsync();
+                utilisateur = JsonSerializer.Deserialize<Utilisateur>(reponseJson);
+                //utilisateur.LienImage = GetImageUtilisateur(utilisateur.IdUtilisateur);
+            }
+            else
+            {
+                utilisateur = null;
+            }
+            return utilisateur;
+        }
+
+        public string GetImageUtilisateur(int id)
+        {
+            return _url + "images/utilisateurs/" + id + ".jpg";
+        }
+
+        public string GetImageEvenement(int id)
+        {
+            return _url + "images/evenements/" + id + ".jpg";
         }
     }
 }
