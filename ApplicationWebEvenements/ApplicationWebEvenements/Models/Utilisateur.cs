@@ -7,11 +7,17 @@ namespace ApplicationWebEvenements.Models
 {
     public class Utilisateur
     {
+        public Utilisateur(string nomUtilisateur, string motDePasse)
+        {
+            NomUtilisateur = nomUtilisateur;
+            MotDePasse = motDePasse;
+        }
+
         public int IdUtilisateur { get; }
         public string NomUtilisateur { get; set; }
         public string MotDePasse { get; set; }
         public string Courriel { get; set; }
         public string Telephone { get; set; }
         public string DateCreation { get; set; }
-    }
+    } 
 }

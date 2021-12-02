@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ApplicationWebEvenements.Models;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,12 @@ namespace ApplicationWebEvenements.Controllers
 {
     public class AuthentificationController : Controller
     {
+        private ApiClient _apiClient;
+
+        public AuthentificationController()
+        {
+            _apiClient = new ApiClient();
+        }
 
         public IActionResult Index()
         {
@@ -22,16 +29,18 @@ namespace ApplicationWebEvenements.Controllers
         }
 
         /// <summary>
-        /// Permet à un utilisateur de se connecter
+        /// Permet à un utilisateur de se connecter via son nom et mdp
         /// </summary>
-        /// <param name="conom">le nom de l'utilisateur</param>
-        /// <param name="comdp">mot de passe</param>
+        /// <param name="conom">connexion nom utilisateur</param>
+        /// <param name="comdp">connexion mot de passe</param>
         /// <returns>la vue home</returns>
         public IActionResult Connexion(String conom, String comdp)
         {
             ViewBag.estMaintenantEnregistre = false;
             if (true)
             {
+                var infoConnexion = new Utilisateur(conom, comdp);
+                var utilisateur = _apiClient.PostConnexion(infoConnexion);
                 ViewBag.messageSucces = "Vous êtes maintenant connecté";
                 return View("Succes");
             }
