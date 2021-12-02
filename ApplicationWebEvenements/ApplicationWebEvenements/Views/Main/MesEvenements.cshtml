@@ -1,0 +1,61 @@
+﻿@{
+    ViewData["Title"] = "Mes événements";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>À faire</p>
+
+<div class="row">
+    <div class="col-md-12" id="menusMesEvens">
+        <div class="card">
+            <div class="card-header">
+                <a class="h2 font-weight-bold text-dark" data-toggle="collapse" href="#presences">
+                    Présences
+                </a>
+            </div>
+            <div id="presences" class="collapse show" data-parent="#menusMesEvens">
+                <div class="card-body">
+                    Mettre la liste des présences ici
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header">
+                <a class="h2 font-weight-bold text-dark" data-toggle="collapse" href="#crees">
+                    Crées
+                </a>
+            </div>
+            <div id="crees" class="collapse" data-parent="#menusMesEvens">
+                <div class="card-body">
+                    Mettre la liste des événements crées ici
+                <div class="card-footer">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="modalCreation">
+                        &#43; Nouvel événement
+                    </button>
+
+                    <!-- Dialogue de création d'événement -->
+                    <div class="modal" id="modalCreation">
+                        <div class="modal-dialog-centered">
+                            <div class="modal-content">
+                                <!-- Entête -->
+                                <div class="modal-header">
+                                    <h3 class="modal-title">Créer un nouvel événement</h3>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <!-- Corps -->
+                                <div class="modal-body">
+                                    Insérer formulaire ici
+                                </div>
+                                <!-- Pied -->
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary">Créer</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

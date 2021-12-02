@@ -11,27 +11,37 @@ using System.Threading.Tasks;
 
 namespace ApplicationWebEvenements.Controllers
 {
-    public class HomeController : Controller
+    [Route("")]
+    public class MainController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<MainController> _logger;
         private readonly ApiClient _client;
 
-        public HomeController(ILogger<HomeController> logger)
+        public MainController(ILogger<MainController> logger)
         {
             _logger = logger;
             _client = new ApiClient();
         }
 
-        public async Task<IActionResult> Index()
+        [Route("")]
+        public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult Privacy()
+        [Route("Recherche")]
+        public IActionResult Recherche()
         {
             return View();
         }
 
+        [Route("MesEvenements")]
+        public IActionResult MesEvenements()
+        {
+            return View();
+        }
+
+        [Route("Error")]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

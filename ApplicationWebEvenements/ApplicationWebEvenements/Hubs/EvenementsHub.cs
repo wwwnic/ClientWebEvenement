@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace ApplicationWebEvenements.Hubs
@@ -7,22 +8,30 @@ namespace ApplicationWebEvenements.Hubs
     public class EvenementsHub : Hub
     {
         private readonly ApiClient _client = new ApiClient();
-        private static string reponseListe = "";
+        private static string listePrésente = "";
 
         public override async Task OnConnectedAsync()
         {
-            await Clients.All.SendAsync("actionRafraichir", reponseListe);
+            await Clients.All.SendAsync("actionRafraichir", listePrésente);
         }
 
         public async Task RafraichirEvenements()
         {
-            var message = await _client.GetEvenementsRecents();
-            if (message.Length != reponseListe.Length)
+            var evenements = await _client.GetEvenementsRecents();
+            if (evenements.Count == 0)
             {
-                reponseListe = message;
-                await Clients.All.SendAsync("actionRafraichir", message);
+                await Clients.All.SendAsync("actionRafraichir", "Erreur de connexion");
             }
-            await Clients.All.SendAsync("actionRafraichir", "");
+            else
+            {
+                var listeJson = JsonSerializer.Serialize(evenements);
+                if (listeJson.Length != listePrésente.Length)
+                {
+                    listePrésente = listeJson;
+                    await Clients.All.SendAsync("actionRafraichir", listeJson);
+                }
+                await Clients.All.SendAsync("actionRafraichir", "");
+            }
         }
     }
 }

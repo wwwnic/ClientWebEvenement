@@ -4,15 +4,19 @@ var connection = new signalR.HubConnectionBuilder().withUrl("/evenementsHub").bu
 
 connection.on("actionRafraichir", function (message) {
     if (message != "") {
-        var listeEvenement = JSON.parse(message);
         var table = document.getElementById("tableEvenements");
         table.innerHTML = "";
-        for (var e of listeEvenement) {
-            var rangeeTable = document.createElement("tr");
-            var elementTable = document.createElement("td");
-            rangeeTable.appendChild(elementTable);
-            table.appendChild(rangeeTable);
-            elementTable.textContent = `${e.nomEvenement}`;
+        if (message == "Erreur de connexion") {
+            table.innerHTML = message;
+        } else {
+            var listeEvenement = JSON.parse(message);
+            for (var e of listeEvenement) {
+                var rangeeTable = document.createElement("tr");
+                var elementTable = document.createElement("td");
+                rangeeTable.appendChild(elementTable);
+                table.appendChild(rangeeTable);
+                elementTable.textContent = `${e.nomEvenement}`;
+            }
         }
     }
 });

@@ -36,7 +36,7 @@ namespace ApplicationWebEvenements
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Main/Error");
             }
             app.UseStaticFiles();
 
@@ -48,7 +48,7 @@ namespace ApplicationWebEvenements
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Main}/{action=Index}/{id?}");
                 endpoints.MapHub<EvenementsHub>("/evenementsHub");
             });
         }
