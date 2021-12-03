@@ -1,4 +1,4 @@
-﻿@model ValidationUtilisateur
+﻿@model Utilisateur
 @{
     ViewData["Title"] = "Enregistrement";
 }
@@ -8,10 +8,6 @@
         .wrapper {
             display: grid;
             grid-template-columns: 9fr 10fr 9fr;
-        }
-
-        input[type="text"] {
-            padding: 3px 10px
         }
     </style>
 </head>
@@ -46,14 +42,14 @@
                     <strong>@Html.LabelFor(model => model.Telephone)</strong>
                     @Html.EditorFor(model => model.Telephone, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Telephone, "", new { @class = "text-danger" })
-
                 </div>
+                <br />
+                <br />
                 <div class="d-flex justify-content-center">
-                    <button type="submit" class="btn btn-primary btn-lg center">Enregistrer</button>
+                    <button asp-controller="Authentification" asp-action="Signup" class="btn btn-primary btn-lg center">S'enregistrer</button>
                 </div>
             }
         </div>
-                <div></div>
-            </div>
+        <div></div>
     </div>
 </body>
