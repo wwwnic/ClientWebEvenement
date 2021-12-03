@@ -28,34 +28,62 @@ connection.start().then(window.setInterval(function () {
 
 //Fonction pour générer une carte par événement
 function genererCarteEvenement(e) {
+
     // Création de l'élément carte avec son image
     var carte = document.createElement("div");
     carte.className = "card";
     carte.innerHTML += '<img class="card-img-top" src="' + e.LienImage + '" alt="Image">';
+
     // Création du header avec le nom
     var header = document.createElement("div");
     header.className = "card-header";
     header.innerHTML = "<h3>" + e.nomEvenement + "</h3>";
+
     // Corps de la carte
     var body = document.createElement("div");
     body.className = "card-body";
+
     // Liste des détails de l'événement
     var elements = document.createElement("ul");
+
     var location = document.createElement("li");
     location.textContent = `Location: ${e.location}`;
     elements.appendChild(location);
+
     var date = document.createElement("li");
     date.textContent = `Date: ${e.date}`;
     elements.appendChild(date);
+
     var organisateur = document.createElement("li");
     organisateur.textContent = `Organisé par: ${e.Organisateur.nomUtilisateur}`;
     elements.appendChild(organisateur);
+
     var description = document.createElement("li");
     description.textContent = `Description: ${e.description}`;
     elements.appendChild(description);
+
+    //Bouton de détail
+    var buttonDiv = document.createElement("div");
+    buttonDiv.style.textAlign = "center";
+
+    var btn = document.createElement("button");
+
+    btn.style.color = "white";
+    btn.style.backgroundColor = "#8a42ff";
+    btn.style.borderColor = "white";
+
+    btn.textContent = `Voir les détails`;
+    btn.addEventListener("click", function () {
+        window.location.href = "http://localhost:64213/Evenement/" + e.idEvenement;
+    });
+
+    buttonDiv.appendChild(btn);
+
     // Attachement des éléments de la carte à celle-ci
     body.appendChild(elements);
     carte.appendChild(header);
     carte.appendChild(body);
+    carte.appendChild(buttonDiv);
+
     return carte;
 }
