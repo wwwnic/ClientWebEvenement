@@ -15,7 +15,7 @@ namespace ApplicationWebEvenements
         public ApiClient()
         {
             _httpClient = new HttpClient();
-            _url = "http://10.0.0.149:23784/";
+            _url = "http://192.168.50.164:23784/";
             _httpClient.DefaultRequestHeaders.Add("ApiKey", "c72e11b4-3118-49a7-999a-e9895d94ad5d");
         }
 
