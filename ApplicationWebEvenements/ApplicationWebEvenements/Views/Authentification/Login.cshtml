@@ -3,31 +3,52 @@
 }
 
 @model Utilisateur
- 
-<div class="row">
-    <h2>Connexion</h2>
-    <div class="row justify-content-center">
-        <div class="col-md-6">
+
+<head>
+    <style>
+        .wrapper {
+            display: grid;
+            grid-template-columns: 9fr 10fr 9fr;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div></div>
+        <div>
+            @{ var msg = ViewBag?.messageErreur;
+                if (msg == "echec_connexion")
+                {
+                    <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+                        Nom d'utilisateur ou mot de passe invalide.
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+                        <span aria-hidden="true">&times;</span>
+                    </div> } }
+        <div>
+            <br />
             <form asp-controller="Authentification" asp-action="Login" method="post">
-                <div class="form-group">
-                    <label asp-for="NomUtilisateur">
-                        <strong>Nom utilisateur</strong>
-                    </label><input class="form-control" asp-for="NomUtilisateur" type="text" />
-                    <br />
-                </div>
-                <div class="form-group">
-                    <label asp-for="MotDePasse">
-                        <strong> Mot de passe</strong>
-                    </label><input class="form-control" asp-for="MotDePasse" type="Password" />
-                </div>
-                <div class="form-group">
-                    <input class="btn btn-primary form-control" type="submit" value="Connexion" />
+                <h1>Connexion</h1>
+                <br />
+                <label asp-for="NomUtilisateur">
+                    <strong>Nom utilisateur</strong>
+                </label>
+                <input class="form-control" asp-for="NomUtilisateur" type="text" placeholder="Nom utilisateur" required />
+                <label asp-for="MotDePasse">
+                    <strong>Mot de passe</strong>
+                </label>
+                <input class="form-control" asp-for="MotDePasse" type="Password" placeholder="Mot de passe" required />
+                <br />
+                <div class="d-flex justify-content-center">
+                    <button asp-controller="Authentification" asp-action="Signup" class="btn btn-primary btn-lg center">Connexion</button>
                 </div>
             </form>
         </div>
-        <div class="col-md-6">
-            <h3>Pas de compte?</h3>
-            <a class="btn btn-primary" asp-controller="Authentification" asp-action="Signup">Créer un compte</a>
+            <br />
+            <br />
+            <div class="justify-content-center text-center">
+                <h3>Pas de compte?</h3>
+                <a class="btn btn-primary" asp-controller="Authentification" asp-action="Signup">Créer un compte</a>
+            </div>
         </div>
-    </div>
-</div>
+        <div></div>
+</body>
