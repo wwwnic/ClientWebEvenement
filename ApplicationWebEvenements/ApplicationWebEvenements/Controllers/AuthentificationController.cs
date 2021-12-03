@@ -31,7 +31,7 @@ namespace ApplicationWebEvenements.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(Utilisateur model)
         {
-            var utilisateur = await _client.LoginUtilisateur(model);
+            var utilisateur = await _client.Login(model);
             if (utilisateur != null)
             {
                 HttpContext.Session.SetInt32("login", utilisateur.IdUtilisateur);
@@ -63,6 +63,12 @@ namespace ApplicationWebEvenements.Controllers
         [HttpPost]
         public IActionResult Signup(Utilisateur model)
         {
+            bool isRegistered = _client.SignUp(model).Result;
+            if (isRegistered)
+            {
+                return View("Login");
+
+            }
             return View();
         }
     }
