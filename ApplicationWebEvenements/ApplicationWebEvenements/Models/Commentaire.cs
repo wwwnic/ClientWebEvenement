@@ -6,6 +6,7 @@ namespace ApplicationWebEvenements.Models
 {
     public class Commentaire
     {
+
         public int IdCommentaire { get; }
         public int IdEvenement { get; set; }
         public int IdUtilisateur { get; set; }

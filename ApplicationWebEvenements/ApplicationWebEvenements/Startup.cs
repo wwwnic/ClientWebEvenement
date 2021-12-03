@@ -23,8 +23,9 @@ namespace ApplicationWebEvenements
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddSignalR();
+            services.AddSession(s => s.IdleTimeout = TimeSpan.FromMinutes(30));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,11 +37,13 @@ namespace ApplicationWebEvenements
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Main/Error");
             }
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseSession();
 
             app.UseAuthorization();
 
@@ -48,7 +51,7 @@ namespace ApplicationWebEvenements
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Main}/{action=Index}/{id?}");
                 endpoints.MapHub<EvenementsHub>("/evenementsHub");
             });
         }

@@ -1,0 +1,85 @@
+﻿@{
+    ViewData["Title"] = "Détails de l'événement";
+}
+@model Evenement
+<div class="row">
+    <div class="col-md-12 text-center">
+        <h1>@ViewData["Title"]</h1>
+        <br />
+        <h2>@Model.NomEvenement</h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="font-weight-bold text-dark">
+                    Infos
+                </h2>
+            </div>
+            <img class="card-img-top" src=@Model.LienImage alt="Image de l'événement" />
+            <div class="card-body">
+                <ul>
+                    <li class="h4">@Model.NomEvenement</li>
+                    <li class="h4">@Model.Location</li>
+                    <li class="h4">@Model.GetDateFormatée()</li>
+                    <li class="h4">Organisé par: @Model.Organisateur.NomUtilisateur</li>
+                    <li class="h4">@Model.Description</li>
+                </ul>
+            </div>
+        </div>
+        <div id="menusDetails">
+            <div class="card">
+                <div class="card-header">
+                    <a class="h3 font-weight-bold text-dark" data-toggle="collapse" href="#participants">
+                        Participants
+                    </a>
+                </div>
+                <div id="participants" class="collapse" data-parent="#menusDetails">
+                    <div class="card-body">
+                        Mettre la liste des participants ici
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <a class="h3 font-weight-bold text-dark" data-toggle="collapse" href="#commentaires">
+                        Commentaires
+                    </a>
+                </div>
+                <div id="commentaires" class="collapse" data-parent="#menusDetails">
+                    <div class="card-body">
+                        Mettre la liste de commentaires ici
+                        <div class="card-footer">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalCommentaire">
+                                &#43; Nouveau commentaire
+                            </button>
+
+                            <!-- Dialogue de création de commentaire -->
+                            <div class="modal" id="modalCommentaire">
+                                <div class="modal-dialog modal-dialog-centered modal-lg">
+                                    <div class="modal-content">
+                                        <!-- Entête -->
+                                        <div class="modal-header">
+                                            <h3 class="modal-title">Nouveau commentaire</h3>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        </div>
+                                        <!-- Corps -->
+                                        <div class="modal-body">
+                                            Insérer formulaire ici
+                                        </div>
+                                        <!-- Pied -->
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary">Créer</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "Enregistrement";
+}
+
+@model Utilisateur
+﻿
+<head>
+    <style>
+        .wrapper {
+            display: grid;
+            grid-template-columns: 9fr 10fr 9fr;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div class="wrapper">
+            <div></div>
+            <form asp-controller="Authentification" asp-action="Signup" method="post">
+                <div>
+                    <h1>Création d'un compte</h1>
+                    <br />
+                    <label asp-for="NomUtilisateur">
+                        <strong>Nom utilisateur</strong>
+                    </label>
+                    <input class="form-control" asp-for="NomUtilisateur" type="text" placeholder="Nom utilisateur" pattern="^(?=.{4,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$" required />
+                    <label asp-for="MotDePasse">
+                        <strong> Mot de passe</strong>
+                    </label>
+                    <input class="form-control" asp-for="MotDePasse" type="Password" placeholder="Mot de passe" pattern="[a-zA-Z0-9!\\@@#$]{4,24}" required />
+                    <label asp-for="Courriel">
+                        <strong> Courriel</strong>
+                    </label>
+                    <input class="form-control" asp-for="Courriel" type="email" placeholder="Courriel" required />
+                    <label asp-for="Telephone">
+                        <strong> Téléphone</strong>
+                    </label>
+                    <input class="form-control" asp-for="Telephone" type="tel" placeholder="Téléphone" required />
+                    <br />
+                    <div class="d-flex justify-content-center">
+                        <button type="submit" class="btn btn-primary btn-lg center">Enregistrer</button>
+                    </div>
+                </div>
+            </form>
+            <div></div>
+        </div>
+    </div>
+</body>
