@@ -1,28 +1,52 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using System.Net.Http;
+using Newtonsoft.Json;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using ApplicationWebEvenements.Models;
 
 namespace ApplicationWebEvenements.Hubs
 {
     public class EvenementsHub : Hub
     {
         private readonly ApiClient _client = new ApiClient();
-        private static string reponseListe = "";
+        private static string listePrésente = "";
 
         public override async Task OnConnectedAsync()
         {
-            await Clients.All.SendAsync("actionRafraichir", reponseListe);
+            await Clients.All.SendAsync("actionRafraichir", listePrésente);
         }
 
-        public async Task RafraichirEvenements()
+        public async Task RafraichirEvenementsRecents()
         {
-            var message = await _client.GetEvenementsRecents();
-            if (message.Length != reponseListe.Length)
+            var evenements = await _client.GetEvenementsRecents();
+            if (evenements.Count == 0)
             {
-                reponseListe = message;
-                await Clients.All.SendAsync("actionRafraichir", message);
+                await Clients.All.SendAsync("actionRafraichir", "Erreur de connexion");
             }
-            await Clients.All.SendAsync("actionRafraichir", "");
+            else
+            {
+                foreach (Evenement e in evenements)
+                {
+                    e.SetDateFormatéePourJS();
+                }
+                var listeJson = JsonConvert.SerializeObject(evenements);
+                if (listeJson.Length != listePrésente.Length)
+                {
+                    listePrésente = listeJson;
+                    await Clients.All.SendAsync("actionRafraichir", listeJson);
+                }
+                await Clients.All.SendAsync("actionRafraichir", "");
+            }
+        }
+
+        public async Task RafraichirCommentaires()
+        {
+            //TODO
+        }
+
+        public async Task RafraichirParticipants()
+        {
+            //TODO
         }
     }
 }

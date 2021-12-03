@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Événements récents";
+}
+
+<div class="row">
+    <h1 class="display-4">@ViewData["Title"]</h1>
+    <div class="col-md-12 justify-content-center">
+        <div id="conteneurEvens" class="card-deck">
+
+        </div>
+    </div>
+    <div id="loading">
+        <div class="spinner-border text-primary"></div>
+    </div>
+</div>
+<script src="~/js/signalr/signalr.js"></script>
+<script src="~/js/signalr/refreshRecent.js"></script>
+        
