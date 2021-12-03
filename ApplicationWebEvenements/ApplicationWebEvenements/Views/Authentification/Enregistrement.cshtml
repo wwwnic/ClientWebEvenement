@@ -5,42 +5,32 @@
 }
 <head>
     <style>
-        fieldset {
-            background-color: #f1f1f1;
-            border: none;
-            border-radius: 2px;
-            margin-bottom: 12px;
-            overflow: hidden;
-            padding: 0 .625em;
-        }
-
-        label {
-            cursor: pointer;
-            display: inline-block;
-            padding: 3px 6px;
-            text-align: right;
-            width: 200px;
-            vertical-align: top;
-        }
-
-        input {
-            font-size: inherit;
+        .wrapper {
+            display: grid;
+            grid-template-columns: 9fr 10fr 9fr;
         }
     </style>
 </head>
 <body>
     <div style="text-align: center;">
-        <form action="/Authentification/Enregistrement" method="post">
-            <div>
-                <h2>Enregistrement</h2>
-                <label for="ennom"><strong>Nom utilisateur</strong></label><input name="ennom" type="text" />
-                <br />
-                <label for="psw"><strong>Mot de passe</strong></label><input name="enmdp1" type="password" />
-                <br />
-                <label for="psw-repeat"><strong>Valider mot de passe</strong></label><input name="enmdp2" type="password" />
-                <br /><br />
-                <button>Enregistrement</button>
-            </div>
-        </form>
+        <div class="wrapper">
+            <div></div>
+            <form action="/Authentification/Enregistrement" method="post">
+                <div>
+                    <h1>Enregistrement</h1>
+                    <br />
+                    <input class="form-control" name="ennom" type="text" placeholder="Nom utilisateur" required />
+                    <input class="form-control" name="enmdp1" type="Password" placeholder="Mot de passe" required />
+                    <input class="form-control" name="enmdp2" type="Password" placeholder="Repeter mot de passe" required />
+                    <input class="form-control" name="encourriel" type="email" placeholder="Courriel" required />
+                    <input class="form-control" name="entelephone" type="text" placeholder="Telephone" required />
+                    <br />
+                    <div class="d-flex justify-content-center">
+                        <button type="submit" class="btn btn-primary btn-lg center">Enregistrement</button>
+                    </div>
+                </div>
+            </form>
+            <div></div>
+        </div>
     </div>
 </body>

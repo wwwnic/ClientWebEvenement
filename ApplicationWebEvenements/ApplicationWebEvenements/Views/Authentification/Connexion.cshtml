@@ -1,49 +1,43 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-<head>
+﻿<head>
     <style>
-        fieldset {
-            background-color: #f1f1f1;
-            border: none;
-            border-radius: 2px;
-            margin-bottom: 12px;
-            overflow: hidden;
-            padding: 0 .625em;
+        .wrapper {
+            display: grid;
+            grid-template-columns: 9fr 10fr 9fr;
         }
 
-        label {
-            cursor: pointer;
-            display: inline-block;
-            padding: 3px 6px;
-            text-align: right;
-            width: 150px;
-            vertical-align: top;
-        }
 
-        input {
-            font-size: inherit;
-        }
     </style>
 </head>
 <body>
-    <div style="text-align: center;">
-        <form action="/Authentification/Connexion" method="post">
+    <main class="form-signin">
+        <div class="wrapper">
+            <div></div>
             <div>
-                <h2>Connexion</h2>
-                <label>
-                    <strong>Nom utilisateur</strong>
-                    <br />
-                </label><input name="conom" type="text" />
-                <br />
-                <label>
-                    <strong> Mot de passe</strong>
-                </label><input name="comdp" type="Password" />
-                <br /><br />
-                <button>Connexion</button>
+                @{
+                    var msg = ViewBag?.messageErreur;
+                    if (msg == "echec_connexion")
+                    {
+                        <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+                            Nom d'utilisateur ou mot de passe invalide.
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+                            <span aria-hidden="true">&times;</span>
+                        </div>
+                    }
+                }
+                <div>
+                    <form action="/Authentification/Connexion" method="post">
+                        <h1 class="text-center">Connexion</h1>
+                        <br />
+                        <input class="form-control" name="conom" type="text" placeholder="Nom utilisateur" required />
+                        <input class="form-control" name="comdp" type="Password" placeholder="Mot de passe" required />
+                        <br />
+                        <div class="d-flex justify-content-center">
+                            <button type="submit" class="btn btn-primary btn-lg center">Connexion</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </form>
-    </div>
+            <div></div>
+        </div>
+    </main>
 </body>

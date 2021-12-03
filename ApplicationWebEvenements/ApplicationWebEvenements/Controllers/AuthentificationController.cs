@@ -37,15 +37,15 @@ namespace ApplicationWebEvenements.Controllers
         public IActionResult Connexion(String conom, String comdp)
         {
             ViewBag.estMaintenantEnregistre = false;
-            if (true)
+            var utilisateur = _apiClient.PostConnexion(new Utilisateur(conom, comdp));
+            if (utilisateur.NomUtilisateur != null)
             {
-                var infoConnexion = new Utilisateur(conom, comdp);
-                var utilisateur = _apiClient.PostConnexion(infoConnexion);
                 ViewBag.messageSucces = "Vous êtes maintenant connecté";
                 return View("Succes");
             }
             else
             {
+                ViewBag.messageErreur = "echec_connexion";
                 return View("Index");
             }
         }
@@ -58,19 +58,22 @@ namespace ApplicationWebEvenements.Controllers
         /// <param name="enmdp1">mot de passe 1</param>
         /// <param name="enmdp2">mot de passe 2 (répetition)</param>
         /// <returns>la vue home</returns>
-        public IActionResult Enregistrement(String ennom, String enmdp1, String enmdp2)
+        public IActionResult Enregistrement(string ennom, string enmdp1, string enmdp2, string encourriel, string entelephone)
         {
             ViewBag.estMaintenantEnregistre = false;
-            if (true)
+            if (enmdp1 == enmdp2) {
+                var estSucces =_apiClient.PostEnregistrement(new Utilisateur(ennom,enmdp1, encourriel, entelephone));
+                if (estSucces)
+                {
+                    ViewBag.messageSucces = "Vous êtes maintenant enregistré";
+                    ViewBag.estMaintenantEnregistre = true;
+                    return View("Succes");
+                }
+            } else
             {
-                ViewBag.messageSucces = "Vous êtes maintenant enregistré";
-                ViewBag.estMaintenantEnregistre = true;
-                return View("Succes");
+                // afficher message mdp1 != mdp2
             }
-            else
-            {
-                return View("Index");
-            }
-        }
+            return View("Index");
+    }
     }
 }

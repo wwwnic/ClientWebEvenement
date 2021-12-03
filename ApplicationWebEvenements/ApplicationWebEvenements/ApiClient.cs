@@ -1,15 +1,14 @@
 ﻿using ApplicationWebEvenements.Models;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
+using System.Text.Json.Serialization;
+
+
 
 namespace ApplicationWebEvenements
 {
-
-
     public class ApiClient
     {
         private HttpClient _httpClient;
@@ -18,6 +17,7 @@ namespace ApplicationWebEvenements
         {
             _httpClient = new HttpClient();
             _url = "http://192.168.50.164:23784/api/";
+            _httpClient.DefaultRequestHeaders.Add("ApiKey", "c72e11b4-3118-49a7-999a-e9895d94ad5d");
         }
 
         public Task<string> GetEvenementsRecents()
@@ -25,11 +25,20 @@ namespace ApplicationWebEvenements
            return ExecuterGetRequete("Evenement/GetRecent");
         }
 
-        public string PostConnexion(Utilisateur utilisateur)
+        public Utilisateur PostConnexion(Utilisateur utilisateur)
         {
             var UrlSuffix = "Utilisateur/Login";
             var reponse = ExecuterPostRequete(UrlSuffix, utilisateur).Result;
-            return reponse;
+            var utilisateurRecu = JsonSerializer.Deserialize<Utilisateur>(reponse);
+            return utilisateurRecu;
+        }
+
+        public bool PostEnregistrement(Utilisateur utilisateur)
+        {
+            var UrlSuffix = "Utilisateur/New";
+            var reponse = ExecuterPostRequete(UrlSuffix, utilisateur).Result;
+
+            return reponse == "";
         }
 
         private async Task<string> ExecuterGetRequete(string urlSuffix)
@@ -45,18 +54,15 @@ namespace ApplicationWebEvenements
 
         private async Task<string> ExecuterPostRequete(string urlSuffix, object model)
         {
-            var json = JsonConvert.SerializeObject(model);
-            var stringContent = new StringContent(json, Encoding.UTF8, "application/json");
-            var reponse = await _httpClient.PostAsync(_url + urlSuffix, stringContent);
+            var reponse = await _httpClient.PostAsJsonAsync(_url + urlSuffix, model);
             if (reponse.IsSuccessStatusCode)
             {
                 return await reponse.Content.ReadAsStringAsync();
             }
             else
             {
-                return "";
+                return "fail";
             }
         }
-
     }
 }
