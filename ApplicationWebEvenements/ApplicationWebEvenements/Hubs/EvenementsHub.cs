@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using System.Net.Http;
-using System.Text.Json;
+using Newtonsoft.Json;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using ApplicationWebEvenements.Models;
 
 namespace ApplicationWebEvenements.Hubs
 {
@@ -15,7 +16,7 @@ namespace ApplicationWebEvenements.Hubs
             await Clients.All.SendAsync("actionRafraichir", listePrésente);
         }
 
-        public async Task RafraichirEvenements()
+        public async Task RafraichirEvenementsRecents()
         {
             var evenements = await _client.GetEvenementsRecents();
             if (evenements.Count == 0)
@@ -24,7 +25,11 @@ namespace ApplicationWebEvenements.Hubs
             }
             else
             {
-                var listeJson = JsonSerializer.Serialize(evenements);
+                foreach (Evenement e in evenements)
+                {
+                    e.SetDateFormatéePourJS();
+                }
+                var listeJson = JsonConvert.SerializeObject(evenements);
                 if (listeJson.Length != listePrésente.Length)
                 {
                     listePrésente = listeJson;
@@ -32,6 +37,16 @@ namespace ApplicationWebEvenements.Hubs
                 }
                 await Clients.All.SendAsync("actionRafraichir", "");
             }
+        }
+
+        public async Task RafraichirCommentaires()
+        {
+            //TODO
+        }
+
+        public async Task RafraichirParticipants()
+        {
+            //TODO
         }
     }
 }

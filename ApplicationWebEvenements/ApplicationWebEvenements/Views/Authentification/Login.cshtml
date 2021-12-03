@@ -1,0 +1,33 @@
+﻿@{
+    ViewData["Title"] = "Connexion";
+}
+
+@model Utilisateur
+ 
+<div class="row">
+    <h2>Connexion</h2>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <form asp-controller="Authentification" asp-action="Login" method="post">
+                <div class="form-group">
+                    <label asp-for="NomUtilisateur">
+                        <strong>Nom utilisateur</strong>
+                    </label><input class="form-control" asp-for="NomUtilisateur" type="text" />
+                    <br />
+                </div>
+                <div class="form-group">
+                    <label asp-for="MotDePasse">
+                        <strong> Mot de passe</strong>
+                    </label><input class="form-control" asp-for="MotDePasse" type="Password" />
+                </div>
+                <div class="form-group">
+                    <input class="btn btn-primary form-control" type="submit" value="Connexion" />
+                </div>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <h3>Pas de compte?</h3>
+            <a class="btn btn-primary" asp-controller="Authentification" asp-action="Signup">Créer un compte</a>
+        </div>
+    </div>
+</div>

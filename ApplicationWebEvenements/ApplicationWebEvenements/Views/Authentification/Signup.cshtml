@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Enregistrement";
+}
+
+@model Utilisateur
+
+<div class="row">
+    <h2>Création d'un compte</h2>
+    <div class="row justify-content-md-center">
+        <form asp-controller="Authentification" asp-action="Signup" method="post">
+                <div class="form-group">
+                    <label asp-for="NomUtilisateur">
+                        <strong>Nom utilisateur</strong>
+                    </label><input class="form-control" asp-for="NomUtilisateur" type="text" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="MotDePasse">
+                        <strong> Mot de passe</strong>
+                    </label><input class="form-control" asp-for="MotDePasse" type="Password" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Courriel">
+                        <strong> Courriel</strong>
+                    </label><input class="form-control" asp-for="Courriel" type="email" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Telephone">
+                        <strong> Téléphone</strong>
+                    </label><input class="form-control" asp-for="Telephone" type="tel" />
+                </div>
+                <div class="form-group">
+                    <input class="btn btn-primary form-control" type="submit" value="Enregistrer" />
+                </div>
+        </form>
+    </div>
+</div>

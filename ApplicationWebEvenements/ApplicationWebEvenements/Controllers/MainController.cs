@@ -1,12 +1,8 @@
-﻿using ApplicationWebEvenements.Hubs;
-using ApplicationWebEvenements.Models;
+﻿using ApplicationWebEvenements.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ApplicationWebEvenements.Controllers
@@ -26,7 +22,13 @@ namespace ApplicationWebEvenements.Controllers
         [Route("")]
         public IActionResult Index()
         {
-            return View();
+            if (HttpContext.Session.GetInt32("login") == null)
+            {
+                return RedirectToAction("Login", "Authentification");
+            } else
+            {
+                return View();
+            }
         }
 
         [Route("Recherche")]
@@ -36,7 +38,14 @@ namespace ApplicationWebEvenements.Controllers
         }
 
         [Route("MesEvenements")]
-        public IActionResult MesEvenements()
+        public async Task<IActionResult> MesEvenements()
+        {
+            var evenements = await _client.GetEvenementsParOrganisateur((int)HttpContext.Session.GetInt32("login"));
+            return View(evenements);
+        }
+
+        [Route("GestionCompte")]
+        public IActionResult GestionCompte()
         {
             return View();
         }

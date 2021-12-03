@@ -1,8 +1,9 @@
 ﻿using ApplicationWebEvenements.Models;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using System.Text.Json;
+using System.Text;
+using Newtonsoft.Json;
+using System.Net.Http;
 
 namespace ApplicationWebEvenements
 {
@@ -18,13 +19,6 @@ namespace ApplicationWebEvenements
             _httpClient.DefaultRequestHeaders.Add("ApiKey", "c72e11b4-3118-49a7-999a-e9895d94ad5d");
         }
 
-        public async Task<string> GetEvenementsRecentsEnJson()
-        {
-            var reponse = await _httpClient.GetAsync(_url + "api/Evenement/GetRecent");
-            var reponseJson = await reponse.Content.ReadAsStringAsync();
-            return reponseJson;
-        }
-
         public async Task<List<Evenement>> GetEvenementsRecents()
         {
             var reponse = await _httpClient.GetAsync(_url + "api/Evenement/GetRecent");
@@ -32,7 +26,24 @@ namespace ApplicationWebEvenements
             if (reponse.IsSuccessStatusCode)
             {
                 var reponseJson = await reponse.Content.ReadAsStringAsync();
-                evenements = JsonSerializer.Deserialize<List<Evenement>>(reponseJson);
+                evenements = JsonConvert.DeserializeObject<List<Evenement>>(reponseJson);
+                foreach (Evenement e in evenements)
+                {
+                    e.Organisateur = await GetUtilisateurParId(e.IdOrganisateur);
+                    e.LienImage = GetImageEvenement(e.IdEvenement);
+                }
+            }
+            return evenements;
+        }
+
+        public async Task<List<Evenement>> GetEvenementsParOrganisateur(int id)
+        {
+            var reponse = await _httpClient.GetAsync(_url + "api/Evenement/GetParOrganisateur/"+id);
+            List<Evenement> evenements = new List<Evenement>();
+            if (reponse.IsSuccessStatusCode)
+            {
+                var reponseJson = await reponse.Content.ReadAsStringAsync();
+                evenements = JsonConvert.DeserializeObject<List<Evenement>>(reponseJson);
                 foreach (Evenement e in evenements)
                 {
                     e.Organisateur = await GetUtilisateurParId(e.IdOrganisateur);
@@ -49,7 +60,7 @@ namespace ApplicationWebEvenements
             if (reponse.IsSuccessStatusCode)
             {
                 var reponseJson = await reponse.Content.ReadAsStringAsync();
-                evenement = JsonSerializer.Deserialize<Evenement>(reponseJson);
+                evenement = JsonConvert.DeserializeObject<Evenement>(reponseJson);
                 evenement.Organisateur = await GetUtilisateurParId(evenement.IdOrganisateur);
                 evenement.LienImage = GetImageEvenement(evenement.IdEvenement);
             }
@@ -67,7 +78,7 @@ namespace ApplicationWebEvenements
             if (reponse.IsSuccessStatusCode)
             {
                 var reponseJson = await reponse.Content.ReadAsStringAsync();
-                utilisateur = JsonSerializer.Deserialize<Utilisateur>(reponseJson);
+                utilisateur = JsonConvert.DeserializeObject<Utilisateur>(reponseJson);
                 utilisateur.LienImage = GetImageUtilisateur(utilisateur.IdUtilisateur);
             }
             else
@@ -75,6 +86,36 @@ namespace ApplicationWebEvenements
                 utilisateur = null;
             }
             return utilisateur;
+        }
+
+        public async Task<Utilisateur> LoginUtilisateur(Utilisateur utilisateur)
+        {
+            var settings = new JsonSerializerSettings
+            {
+                DefaultValueHandling = DefaultValueHandling.Ignore,
+                NullValueHandling = NullValueHandling.Ignore
+            };
+            var userJson = JsonConvert.SerializeObject(utilisateur,settings);
+            var contenu = new StringContent(userJson, Encoding.UTF8, "application/json");
+            var reponse = await _httpClient.PostAsync(_url + "api/Utilisateur/Login", contenu);
+            if (reponse.IsSuccessStatusCode)
+            {
+                var reponseJson = await reponse.Content.ReadAsStringAsync();
+                utilisateur = JsonConvert.DeserializeObject<Utilisateur>(reponseJson);
+                if (utilisateur.IdUtilisateur != 0)
+                {
+                    return utilisateur;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                return null;
+            }
+
         }
 
         public string GetImageUtilisateur(int id)

@@ -1,7 +1,7 @@
 ﻿
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
 #nullable disable
 
@@ -9,17 +9,17 @@ namespace ApplicationWebEvenements.Models
 {
     public class Utilisateur
     {
-        [JsonPropertyName("idUtilisateur")]
+        [JsonProperty("idUtilisateur")]
         public int IdUtilisateur { get; set; }
-        [JsonPropertyName("nomUtilisateur")]
+        [JsonProperty("nomUtilisateur")]
         public string NomUtilisateur { get; set; }
-        [JsonPropertyName("motDePasse")]
+        [JsonProperty("motDePasse")]
         public string MotDePasse { get; set; }
-        [JsonPropertyName("courriel")]
+        [JsonProperty("courriel")]
         public string Courriel { get; set; }
-        [JsonPropertyName("telephone")]
+        [JsonProperty("telephone")]
         public string Telephone { get; set; }
-        [JsonPropertyName("dateCreation")]
+        [JsonProperty("dateCreation")]
         public string DateCreation { get; }
         public string LienImage { get; set; }
     }

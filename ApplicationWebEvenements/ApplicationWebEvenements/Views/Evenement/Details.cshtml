@@ -23,7 +23,7 @@
                 <ul>
                     <li class="h4">@Model.NomEvenement</li>
                     <li class="h4">@Model.Location</li>
-                    <li class="h4">@Model.Date</li>
+                    <li class="h4">@Model.GetDateFormatée()</li>
                     <li class="h4">Organisé par: @Model.Organisateur.NomUtilisateur</li>
                     <li class="h4">@Model.Description</li>
                 </ul>
@@ -52,13 +52,13 @@
                     <div class="card-body">
                         Mettre la liste de commentaires ici
                         <div class="card-footer">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="modalCommentaire">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalCommentaire">
                                 &#43; Nouveau commentaire
                             </button>
 
-                            <!-- Dialogue de création d'événement -->
+                            <!-- Dialogue de création de commentaire -->
                             <div class="modal" id="modalCommentaire">
-                                <div class="modal-dialog-centered">
+                                <div class="modal-dialog modal-dialog-centered modal-lg">
                                     <div class="modal-content">
                                         <!-- Entête -->
                                         <div class="modal-header">

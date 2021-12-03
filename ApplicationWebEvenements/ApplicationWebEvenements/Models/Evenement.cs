@@ -1,25 +1,36 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
 namespace ApplicationWebEvenements.Models
 {
     public class Evenement
     {
-        [JsonPropertyName("idEvenement")]
+        [JsonProperty("idEvenement")]
         public int IdEvenement { get; set; }
-        [JsonPropertyName("nomEvenement")]
+        [JsonProperty("nomEvenement")]
         public string NomEvenement { get; set; }
-        [JsonPropertyName("location")]
+        [JsonProperty("location")]
         public string Location { get; set; }
-        [JsonPropertyName("date")]
-        public string Date { get; set; }
-        [JsonPropertyName("idOrganisateur")]
+        [JsonProperty("date")]
+        public string Date {  get; set; }
+        [JsonProperty("idOrganisateur")]
         public int IdOrganisateur { get; set; }
-        [JsonPropertyName("description")]
+        [JsonProperty("description")]
         public string Description { get; set; }
         public Utilisateur Organisateur { get; set; }
         public string LienImage { get; set; }
+
+        public string GetDateFormatée()
+        {
+            var dateHeure = Date.Split("T");
+            return dateHeure[0] + " " + dateHeure[1];
+        }
+
+        public void SetDateFormatéePourJS()
+        {
+            var dateHeure = Date.Split("T");
+            Date = dateHeure[0] + " " + dateHeure[1];
+        }
     }
 }
