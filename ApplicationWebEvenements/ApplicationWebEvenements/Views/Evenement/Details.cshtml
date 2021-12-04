@@ -1,5 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Détails de l'événement";
+    var liste = ViewBag.listeUtilisateur;
 }
 @model Evenement
 <div class="row">
@@ -33,12 +34,24 @@
             <div class="card">
                 <div class="card-header">
                     <a class="h3 font-weight-bold text-dark" data-toggle="collapse" href="#participants">
-                        Participants
+                        Participants (@liste.Count)
                     </a>
                 </div>
                 <div id="participants" class="collapse" data-parent="#menusDetails">
                     <div class="card-body">
-                        Mettre la liste des participants ici
+                        <ul>                       
+                            @if (liste.Count > 0)
+                            {
+                                foreach (Utilisateur utilisateur in liste)
+                                {
+                                    <li>@utilisateur.NomUtilisateur</li>
+                                }
+                            } 
+                            else
+                            {
+                                <li>Aucun participant</li>
+                            }                        
+                        </ul>
                     </div>
                 </div>
             </div>

@@ -95,6 +95,24 @@ namespace ApplicationWebEvenements
             return utilisateur;
         }
 
+        public async Task<List<Utilisateur>> GetUtilisateurParEvenement(int idEvenement)
+        {
+            var reponse = await _httpClient.GetAsync(_url + "api/Utilisateur/GetByEvent?idEvenement=" + idEvenement);
+            List<Utilisateur> listeUtilisateur = new List<Utilisateur>();
+
+            if (reponse.IsSuccessStatusCode)
+            {
+                var reponseJson = await reponse.Content.ReadAsStringAsync();
+                listeUtilisateur = JsonConvert.DeserializeObject<List<Utilisateur>>(reponseJson);
+            }
+            else
+            {
+                listeUtilisateur = null;
+            }
+
+            return listeUtilisateur;
+        }
+
         public async Task<Utilisateur> Login(Utilisateur utilisateur)
         {
             var userJson = JsonConvert.SerializeObject(utilisateur,_authSetting);

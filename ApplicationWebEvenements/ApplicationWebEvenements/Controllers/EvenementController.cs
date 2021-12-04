@@ -20,6 +20,8 @@ namespace ApplicationWebEvenements.Controllers
         public async Task<IActionResult> Details(int idEvenement)
         {
             var evenement = await _client.GetEvenementParId(idEvenement);
+            var listeUtilisateur = await _client.GetUtilisateurParEvenement(idEvenement);
+            ViewBag.listeUtilisateur = listeUtilisateur;
             if (evenement != null)
             {
                 return View(evenement);
