@@ -16,20 +16,18 @@
     <div>
         <div class="wrapper">
             <div></div>
-            @{ var msg = ViewBag?.messageErreur;
-                if (msg == "echec_connexion")
-                {
-                    <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
-                        Nom d'utilisateur ou mot de passe invalide.
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
-                        <span aria-hidden="true">&times;</span>
-                    </div> }
-            }
             @using (Html.BeginForm())
             {
                 <br />
                 <h1>Connexion</h1>
                 <br />
+                if (ViewBag?.messageErreur != null)
+                {
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <strong>@ViewBag.messageErreur</strong>
+                    </div>
+                }
                 <div>
                     <strong>@Html.LabelFor(model => model.NomUtilisateur)</strong>
                     @Html.EditorFor(model => model.NomUtilisateur, new { htmlAttributes = new { @class = "form-control" } })

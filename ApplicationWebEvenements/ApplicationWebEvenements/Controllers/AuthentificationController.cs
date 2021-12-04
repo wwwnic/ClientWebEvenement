@@ -31,8 +31,18 @@ namespace ApplicationWebEvenements.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(Utilisateur model)
         {
-            var utilisateur = await _client.Login(model);
-            if (utilisateur != null)
+            Utilisateur? utilisateur;
+            try
+            {
+                utilisateur = await _client.Login(model);
+            }
+            catch
+            {
+                ViewBag.messageErreur = "Erreur de connexion avec le serveur";
+                utilisateur = null;
+                return View(model);
+            }
+            if (utilisateur?.NomUtilisateur != null)
             {
                 HttpContext.Session.SetInt32("login", utilisateur.IdUtilisateur);
                 HttpContext.Session.SetString("nomLogin", utilisateur.NomUtilisateur);
@@ -40,7 +50,8 @@ namespace ApplicationWebEvenements.Controllers
             }
             else
             {
-                return View();
+                ViewBag.messageErreur("Une erreur est survenue durant votre connexion");
+                return View(model);
             }
         }
 
@@ -63,13 +74,25 @@ namespace ApplicationWebEvenements.Controllers
         [HttpPost]
         public IActionResult Signup(Utilisateur model)
         {
-            bool isRegistered = _client.SignUp(model).Result;
-            if (isRegistered)
+            bool? isRegistered;
+            try
+            {
+                isRegistered = _client.SignUp(model)?.Result;
+            } catch
+            {
+                ViewBag.messageErreur = "Erreur de connexion avec le serveur";
+                isRegistered = null;
+                return View(model);
+            }
+            if (isRegistered.HasValue && isRegistered.Value)
             {
                 return View("Login");
 
+            } else
+            {
+                ViewBag.messageErreur("Une erreur est survenue durant votre inscription");
+                return View(model);
             }
-            return View();
         }
     }
 }
