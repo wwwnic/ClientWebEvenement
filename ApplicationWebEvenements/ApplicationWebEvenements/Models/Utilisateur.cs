@@ -1,4 +1,4 @@
-﻿
+
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -55,7 +55,7 @@ namespace ApplicationWebEvenements.Models
 
         public string GetTéléphoneFormaté()
         {
-            if (Telephone.Length >= 9)
+            if (Telephone.Length == 9)
             {
                 var partie1 = Telephone.Substring(0, 3);
                 var partie2 = Telephone.Substring(3, 3);
