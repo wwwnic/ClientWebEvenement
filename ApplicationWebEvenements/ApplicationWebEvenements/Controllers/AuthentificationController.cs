@@ -2,9 +2,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ApplicationWebEvenements.Controllers
@@ -50,7 +47,7 @@ namespace ApplicationWebEvenements.Controllers
             }
             else
             {
-                ViewBag.messageErreur("Une erreur est survenue durant votre connexion");
+                ViewBag.messageErreur = "Une erreur est survenue durant votre connexion";
                 return View(model);
             }
         }
@@ -90,7 +87,7 @@ namespace ApplicationWebEvenements.Controllers
 
             } else
             {
-                ViewBag.messageErreur("Une erreur est survenue durant votre inscription");
+                ViewBag.messageErreur = "Une erreur est survenue durant votre inscription";
                 return View(model);
             }
         }
