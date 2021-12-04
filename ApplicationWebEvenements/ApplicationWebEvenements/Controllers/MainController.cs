@@ -44,11 +44,6 @@ namespace ApplicationWebEvenements.Controllers
             return View(evenements);
         }
 
-        [Route("GestionCompte")]
-        public IActionResult GestionCompte()
-        {
-            return View();
-        }
 
         [Route("Error")]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

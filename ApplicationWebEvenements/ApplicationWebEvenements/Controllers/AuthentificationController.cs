@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System.Threading.Tasks;
 
 namespace ApplicationWebEvenements.Controllers
@@ -41,8 +42,10 @@ namespace ApplicationWebEvenements.Controllers
             }
             if (utilisateur?.NomUtilisateur != null)
             {
+                var utilisateurJson = JsonConvert.SerializeObject(utilisateur);
                 HttpContext.Session.SetInt32("login", utilisateur.IdUtilisateur);
                 HttpContext.Session.SetString("nomLogin", utilisateur.NomUtilisateur);
+                HttpContext.Session.SetString("utilisateur", utilisateurJson);
                 return RedirectToAction("Index", "Main");
             }
             else
