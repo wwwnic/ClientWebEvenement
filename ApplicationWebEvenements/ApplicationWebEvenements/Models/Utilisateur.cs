@@ -1,4 +1,3 @@
-﻿
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -49,7 +48,31 @@ namespace ApplicationWebEvenements.Models
         public string Telephone { get; set; }
 
         [JsonProperty("dateCreation")]
-        public string DateCreation { get; }
+        [Display(Name = "Date de création")]
+        public string DateCreation { get; set; }
+
+
+        public string GetTéléphoneFormaté()
+        {
+            if (Telephone.Length == 10)
+            {
+                var partie1 = Telephone.Substring(0, 3);
+                var partie2 = Telephone.Substring(3, 3);
+                var partie3 = Telephone.Substring(6, 4);
+                return $"{partie1}-{partie2}-{partie3}";
+            }
+            else
+            {
+                return Telephone;
+            }
+        }
+
+        public string GetDateFormatée()
+        {
+            var dateHeure = DateCreation.Split("T");
+            return dateHeure[0];
+        }
+
         public string LienImage { get; set; }
     }
 }

@@ -16,7 +16,7 @@ namespace ApplicationWebEvenements
         public ApiClient()
         {
             _httpClient = new HttpClient();
-            _url = "http://192.168.0.107:44312/";
+            _url = "http://192.168.50.164:23784/";
             _httpClient.DefaultRequestHeaders.Add("ApiKey", "c72e11b4-3118-49a7-999a-e9895d94ad5d");
             _authSetting = new JsonSerializerSettings
             {
@@ -119,15 +119,21 @@ namespace ApplicationWebEvenements
             }
 
         }
-
-
         public async Task<bool> SignUp(Utilisateur utilisateur)
         {
             var userJson = JsonConvert.SerializeObject(utilisateur, _authSetting);
             var contenu = new StringContent(userJson, Encoding.UTF8, "application/json");
             var reponse = await _httpClient.PostAsync(_url + "api/Utilisateur/New", contenu);
             return reponse.IsSuccessStatusCode;
+        }
 
+
+        public async Task<bool> EditAccount(Utilisateur utilisateur)
+        {
+            var userJson = JsonConvert.SerializeObject(utilisateur, _authSetting);
+            var contenu = new StringContent(userJson, Encoding.UTF8, "application/json");
+            var reponse = await _httpClient.PutAsync(_url + "api/Utilisateur/Update", contenu);
+            return reponse.IsSuccessStatusCode;
         }
 
 

@@ -1,0 +1,61 @@
+﻿@model Utilisateur
+@{
+    ViewData["Title"] = "Gestion du compte";
+}
+<head>
+    <style>
+        .wrapper {
+            display: grid;
+            grid-template-columns: 9fr 10fr 9fr;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div class="wrapper">
+            <div></div>
+            @using (Html.BeginForm())
+            {
+                <h1>Editer compte</h1>
+                <br />
+                if (ViewBag?.messageErreur != null)
+                {
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <strong>@ViewBag.messageErreur</strong>
+                    </div>
+                }
+                <div>
+                    <strong>Modifier nom utilisateur</strong>
+                    @Html.EditorFor(model => model.NomUtilisateur, new { htmlAttributes = new { @class = "form-control" } })
+
+                    @Html.ValidationMessageFor(model => model.NomUtilisateur, "", new { @class = "text-danger" })
+                    <br />
+                </div>
+                <div>
+                    <strong>Nouveau mot de passe</strong>
+                    @Html.PasswordFor(model => model.MotDePasse, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.MotDePasse, "", new { @class = "text-danger" })
+                    <br />
+                </div>
+                <div>
+                    <strong>Modifier courriel</strong>
+                    @Html.EditorFor(model => model.Courriel, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Courriel, "", new { @class = "text-danger" })
+                    <br />
+                </div>
+                <div>
+                    <strong>Modifier téléphone</strong>
+                    @Html.EditorFor(model => model.Telephone, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Telephone, "", new { @class = "text-danger" })
+                </div>
+                <br />
+                <br />
+                <div class="d-flex justify-content-center">
+                    <button asp-controller="Compte" asp-action="ModifierCompte" class="btn btn-primary btn-lg center">Enregistrer les modifications</button>
+                </div>
+            }
+        </div>
+        <div></div>
+    </div>
+</body>
