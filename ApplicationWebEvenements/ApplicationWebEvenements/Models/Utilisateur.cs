@@ -55,10 +55,17 @@ namespace ApplicationWebEvenements.Models
 
         public string GetTéléphoneFormaté()
         {
-            var partie1 = Telephone.Substring(0, 3);
-            var partie2 = Telephone.Substring(3, 3);
-            var partie3 = Telephone.Substring(6, 4);
-            return $"{partie1}-{partie2}-{partie3}";
+            if (Telephone.Length >= 9)
+            {
+                var partie1 = Telephone.Substring(0, 3);
+                var partie2 = Telephone.Substring(3, 3);
+                var partie3 = Telephone.Substring(6, 4);
+                return $"{partie1}-{partie2}-{partie3}";
+            }
+            else
+            {
+                return Telephone;
+            }
         }
 
         public string GetDateFormatée()
