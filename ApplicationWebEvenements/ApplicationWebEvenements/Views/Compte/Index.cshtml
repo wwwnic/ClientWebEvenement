@@ -2,6 +2,47 @@
 @{
     ViewData["Title"] = "Compte";
 }
-<div class="d-flex justify-content-center">
-    <a asp-controller="Compte" asp-action="GestionCompte" class="btn btn-primary btn-lg center">Gerer le compte</a>
-</div>
+<head>
+    <style>
+        .wrapper {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <br />
+        <br />
+        <table class="table table-user-information" style="width:100%">
+            <tr>
+                <th>@Html.LabelFor(model => model.NomUtilisateur)</th>
+                <td>@Html.DisplayFor(model => model.NomUtilisateur)</td>
+            </tr>
+            <tr>
+                <th>@Html.LabelFor(model => model.MotDePasse)</th>
+                <td>●●●●●●●●</td>
+            </tr>
+            <tr>
+                <th>@Html.LabelFor(model => model.Courriel)</th>
+                <td>@Html.DisplayFor(model => model.Courriel)</td>
+            </tr>
+            <tr>
+                <th>@Html.LabelFor(model => model.Telephone)</th>
+                <td>@Html.DisplayFor(model => model.Telephone)</td>
+            </tr>
+            <tr>
+                <th>@Html.LabelFor(model => model.DateCreation)</th>
+                <td>@Html.DisplayFor(model => model.DateCreation)</td>
+            </tr>
+        </table>
+        <div></div>
+    </div>
+    <div class="wrapper">
+        <div></div>
+        <div class="d-flex justify-content-center">
+            <a asp-controller="Compte" asp-action="GestionCompte" class="btn btn-primary btn-lg center">Gerer le compte</a>
+        </div>
+        <div></div>
+    </div>
+</body>

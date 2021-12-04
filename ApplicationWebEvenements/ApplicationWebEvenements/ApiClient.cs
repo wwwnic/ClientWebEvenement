@@ -119,15 +119,21 @@ namespace ApplicationWebEvenements
             }
 
         }
-
-
         public async Task<bool> SignUp(Utilisateur utilisateur)
         {
             var userJson = JsonConvert.SerializeObject(utilisateur, _authSetting);
             var contenu = new StringContent(userJson, Encoding.UTF8, "application/json");
             var reponse = await _httpClient.PostAsync(_url + "api/Utilisateur/New", contenu);
             return reponse.IsSuccessStatusCode;
+        }
 
+
+        public async Task<bool> EditAccount(Utilisateur utilisateur)
+        {
+            var userJson = JsonConvert.SerializeObject(utilisateur, _authSetting);
+            var contenu = new StringContent(userJson, Encoding.UTF8, "application/json");
+            var reponse = await _httpClient.PutAsync(_url + "api/Utilisateur/Update", contenu);
+            return reponse.IsSuccessStatusCode;
         }
 
 

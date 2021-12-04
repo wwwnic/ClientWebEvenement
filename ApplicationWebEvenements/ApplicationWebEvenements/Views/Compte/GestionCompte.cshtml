@@ -16,7 +16,7 @@
             <div></div>
             @using (Html.BeginForm())
             {
-                <h1>Modifier votre compte</h1>
+                <h1>Editer compte</h1>
                 <br />
                 if (ViewBag?.messageErreur != null)
                 {
@@ -26,26 +26,26 @@
                     </div>
                 }
                 <div>
-                    <strong>@Html.LabelFor(model => model.NomUtilisateur)</strong>
+                    <strong>Modifier nom utilisateur</strong>
                     @Html.EditorFor(model => model.NomUtilisateur, new { htmlAttributes = new { @class = "form-control" } })
 
                     @Html.ValidationMessageFor(model => model.NomUtilisateur, "", new { @class = "text-danger" })
                     <br />
                 </div>
                 <div>
-                    <strong>@Html.LabelFor(model => model.MotDePasse)</strong>
+                    <strong>Nouveau mot de passe</strong>
                     @Html.PasswordFor(model => model.MotDePasse, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.MotDePasse, "", new { @class = "text-danger" })
                     <br />
                 </div>
                 <div>
-                    <strong> @Html.LabelFor(model => model.Courriel)</strong>
+                    <strong>Modifier courriel</strong>
                     @Html.EditorFor(model => model.Courriel, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Courriel, "", new { @class = "text-danger" })
                     <br />
                 </div>
                 <div>
-                    <strong>@Html.LabelFor(model => model.Telephone)</strong>
+                    <strong>Modifier téléphone</strong>
                     @Html.EditorFor(model => model.Telephone, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Telephone, "", new { @class = "text-danger" })
                 </div>

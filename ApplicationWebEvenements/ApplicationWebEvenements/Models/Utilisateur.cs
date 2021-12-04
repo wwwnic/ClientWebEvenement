@@ -49,7 +49,7 @@ namespace ApplicationWebEvenements.Models
         public string Telephone { get; set; }
 
         [JsonProperty("dateCreation")]
-        public string DateCreation { get; }
+        public string DateCreation { get; set; }
         public string LienImage { get; set; }
     }
 }
