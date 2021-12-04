@@ -62,28 +62,14 @@ function genererCarteEvenement(e) {
     description.textContent = `Description: ${e.description}`;
     elements.appendChild(description);
 
-    //Bouton de détail
-    var buttonDiv = document.createElement("div");
-    buttonDiv.style.textAlign = "center";
-
-    var btn = document.createElement("button");
-
-    btn.style.color = "white";
-    btn.style.backgroundColor = "#8a42ff";
-    btn.style.borderColor = "white";
-
-    btn.textContent = `Voir les détails`;
-    btn.addEventListener("click", function () {
-        window.location.href = "http://localhost:64213/Evenement/" + e.idEvenement;
-    });
-
-    buttonDiv.appendChild(btn);
+    var description2 = document.createElement("li");
+    description2.textContent = `allo`;
+    elements.appendChild(description2);
 
     // Attachement des éléments de la carte à celle-ci
     body.appendChild(elements);
     carte.appendChild(header);
     carte.appendChild(body);
-    carte.appendChild(buttonDiv);
 
     return carte;
 }
