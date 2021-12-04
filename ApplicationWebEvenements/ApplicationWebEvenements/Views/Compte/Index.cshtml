@@ -29,11 +29,11 @@
             </tr>
             <tr>
                 <th>@Html.LabelFor(model => model.Telephone)</th>
-                <td>@Html.DisplayFor(model => model.Telephone)</td>
+                <td>@Model.GetTéléphoneFormaté()</td>
             </tr>
             <tr>
                 <th>@Html.LabelFor(model => model.DateCreation)</th>
-                <td>@Html.DisplayFor(model => model.DateCreation)</td>
+                <td>@Model.GetDateFormatée()</td>
             </tr>
         </table>
         <div></div>
