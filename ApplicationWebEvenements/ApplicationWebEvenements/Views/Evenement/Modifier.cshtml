@@ -1,0 +1,62 @@
+﻿@model Evenement
+@{
+    ViewData["Title"] = "Creation evenement";
+}
+﻿
+<head>
+    <style>
+        .wrapper {
+            display: grid;
+            grid-template-columns: 9fr 10fr 9fr;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div class="wrapper">
+            <div></div>
+            @using (Html.BeginForm("Modifier", "Evenement", Model))
+            {
+                <h1>Modifier un événement</h1>
+                <br />
+                if (ViewBag?.messageErreur != null)
+                {
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <strong>@ViewBag.messageErreur</strong>
+                    </div>
+                }
+                <div>
+                    <strong>Modifier le nom</strong>
+                    @Html.EditorFor(model => model.NomEvenement, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.NomEvenement, "", new { @class = "text-danger" })
+                    <br />
+                </div>
+                <div>
+                    <strong>Modifier la date</strong>
+                    @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+                    <br />
+                </div>
+                <div>
+                    <strong>Modifier la location</strong>
+                    @Html.EditorFor(model => model.Location, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
+                    <br />
+                </div>
+                <div>
+                    <strong>Modifier la description</strong>
+                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                    <br />
+                </div>
+                <br />
+                <br />
+                <div class="d-flex justify-content-center">
+                    <button class="btn btn-primary btn-lg center">Enregistrer</button>
+                </div>
+            }
+        </div>
+        <div></div>
+    </div>
+</body>

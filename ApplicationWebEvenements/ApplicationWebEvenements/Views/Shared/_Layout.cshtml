@@ -22,17 +22,20 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     @if (@Context.Session.GetInt32("login") != null)
                     {
-                        <ul class="navbar-nav flex-grow-1">
-                            <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="Main" asp-action="Index">Événements récents</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="Main" asp-action="Recherche">Recherche d'événements</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="Main" asp-action="MesEvenements">Mes événements</a>
-                            </li>
-                        </ul>
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Main" asp-action="Index">Événements récents</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Main" asp-action="Recherche">Recherche d'événements</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Main" asp-action="MesEvenements">Mes événements</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Evenement" asp-action="Creer">Creer événement</a>
+                        </li>
+                    </ul>
                         <div class="justify-content-xl-end">
                             <a class="nav-link text-white" asp-area="" asp-controller="Compte" asp-action="Index">Gestion du compte</a>
                             <a class="nav-link text-white" asp-area="" asp-controller="Authentification" asp-action="Logoff">
