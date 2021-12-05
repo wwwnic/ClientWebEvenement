@@ -7,41 +7,42 @@
 
 <div class="row">
     <div class="col-md-12" id="menusMesEvens">
-        <div class="card">
-            <div class="card-header">
-                <a class="h2 font-weight-bold text-dark" data-toggle="collapse" href="#presences">
-                    Présences
-                </a>
-            </div>
-            <div id="presences" class="collapse show" data-parent="#menusMesEvens">
-                <div class="card-body">
-                    @if (Model.listePresences.Count != 0)
-                    {
-                        @foreach (var e in Model.listePresences)
+         <div class="card">
+                <div class="card-header">
+                    <a class="h2 font-weight-bold text-dark" data-toggle="collapse" href="#presences">
+                        Présences
+                    </a>
+                </div>
+                <div id="presences" class="collapse show" data-parent="#menusMesEvens">
+                    <div class="card-body">
+                        @if (Model.listePresences.Count != 0)
                         {
-                        <div class="card">
-                            <img class="card-img-top" src="@e.LienImage" alt="Image">
-                            <div class="card-header">
-                                <h3>@e.NomEvenement</h3>
+                            @foreach (var e in Model.listePresences)
+                            {
+                            <div class="card">
+                                <img class="card-img-top" src="@e.LienImage" alt="Image">
+                                <div class="card-header">
+                                    <h3>@e.NomEvenement</h3>
+                                </div>
+                                <div class="card-body">
+                                    <ul>
+                                        <li>@e.Location</li>
+                                        <li>@e.GetDateFormatée()</li>
+                                        <li>@e.Organisateur.NomUtilisateur</li>
+                                        <li>@e.Description</li>
+                                    </ul>
+                                </div>
+                                <div class="card-footer text-center">
+                                    <a asp-controller="Evenement" asp-action="@e.IdEvenement" class="btn btn-primary" style="color: white; background-color: rgb(138, 66, 255); border-color: white;">Voir les détails</a>
+                                </div>
                             </div>
-                            <div class="card-body">
-                                <ul>
-                                    <li>@e.Location</li>
-                                    <li>@e.GetDateFormatée()</li>
-                                    <li>@e.Organisateur.NomUtilisateur</li>
-                                    <li>@e.Description</li>
-                                </ul>
-                            </div>
-                            <div class="card-footer text-center">
-                                <a asp-controller="Evenement" asp-action="@e.IdEvenement" class="btn btn-primary" style="color: white; background-color: rgb(138, 66, 255); border-color: white;">Voir les détails</a>
-                            </div>
-                        </div>
+                            }
+                        } 
+                        else
+                        {
+                            <h4>Vous ne participez à aucun événement.</h4>
                         }
-                    } 
-                    else
-                    {
-                        <h4>Vous ne participez à aucun événement.</h4>
-                    }
+                    </div>
                 </div>
             </div>
         <div class="card">
@@ -80,4 +81,3 @@
         </div>
     </div>
 </div>
-<script src="~/js/signalr/signalr.js"></script>

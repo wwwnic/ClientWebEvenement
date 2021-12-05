@@ -1,6 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Détails de l'événement";
-    var liste = ViewBag.listeUtilisateur;
+    var estParticipant = ViewBag.estParticipant;
 }
 @model Evenement
 <div class="row">
@@ -12,6 +12,7 @@
 </div>
 
 <div class="row">
+    <span class="text-danger" id="texteErreur"></span>
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
@@ -29,28 +30,36 @@
                     <li class="h4">@Model.Description</li>
                 </ul>
             </div>
+            <div class="card-footer">
+                <!-- On initialise le bouton avec la donnée du ViewBag, après c'est géré par le Javascript/SignalR.
+                    estParticipant(0) = Non-participant, (1) = Participant, (2) = Est l'organisateur -->
+                @if (estParticipant != 2)
+                {
+                    if (estParticipant == 0)
+                    {
+                        <button onclick="participation(false)" id="btnParticipation" class="btn btn-primary figma-mauve">Je participe</button>
+                    }
+                    else
+                    {
+                        <button onclick="participation(true)" id="btnParticipation" class="btn btn-danger">Je ne participe pas</button>
+                    }
+                }
+                else
+                {
+                    <strong>Vous êtes l'organisateur</strong>
+                }
+            </div>
         </div>
         <div id="menusDetails">
             <div class="card">
                 <div class="card-header">
-                    <a class="h3 font-weight-bold text-dark" data-toggle="collapse" href="#participants">
-                        Participants (@liste.Count)
+                    <a id="nbParticipants" class="h3 font-weight-bold text-dark" data-toggle="collapse" href="#participants">
+                        
                     </a>
                 </div>
                 <div id="participants" class="collapse" data-parent="#menusDetails">
                     <div class="card-body">
-                        <ul>                       
-                            @if (liste.Count > 0)
-                            {
-                                foreach (Utilisateur utilisateur in liste)
-                                {
-                                    <li>@utilisateur.NomUtilisateur</li>
-                                }
-                            } 
-                            else
-                            {
-                                <li>Aucun participant</li>
-                            }                        
+                        <ul id="conteneurParticipants">
                         </ul>
                     </div>
                 </div>
@@ -63,7 +72,9 @@
                 </div>
                 <div id="commentaires" class="collapse" data-parent="#menusDetails">
                     <div class="card-body">
-                        Mettre la liste de commentaires ici
+                        <div id="conteneurCommentaires">
+
+                        </div>
                         <div class="card-footer">
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalCommentaire">
                                 &#43; Nouveau commentaire
@@ -96,3 +107,5 @@
         </div>
     </div>
 </div>
+<script src="~/js/signalr/signalr.js"></script>
+<script src="~/js/signalr/refreshDetails.js"></script>

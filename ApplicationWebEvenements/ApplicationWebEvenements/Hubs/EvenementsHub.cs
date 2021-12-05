@@ -10,6 +10,7 @@ namespace ApplicationWebEvenements.Hubs
     {
         private readonly ApiClient _client = new ApiClient();
         private static string listePrésente = "";
+        public static int idEvenementDetails = 0;
 
         public override async Task OnConnectedAsync()
         {
@@ -39,14 +40,43 @@ namespace ApplicationWebEvenements.Hubs
             }
         }
 
-        public async Task RafraichirCommentaires()
+        public async Task RafraichirDetails()
         {
-            //TODO
+            var commentaires = await _client.GetCommentairesParEvenement(idEvenementDetails);
+            var participants = await _client.GetUtilisateurParEvenement(idEvenementDetails);
+            if (participants.Count == 0)
+            {
+                await Clients.All.SendAsync("rafraichirParticipants", "Erreur de connexion");
+            }
+            else
+            {
+                var listeJsonCommentaires = JsonConvert.SerializeObject(commentaires);
+                var listeJsonParticipants = JsonConvert.SerializeObject(participants);
+                await Clients.All.SendAsync("rafraichirParticipants", listeJsonParticipants);
+                await Clients.All.SendAsync("rafraichirCommentaires", listeJsonCommentaires);
+            }
         }
 
-        public async Task RafraichirParticipants()
+        public async Task ModifierParticipation(bool estParticipant)
         {
-            //TODO
+            var utilisateurEvenement = new Utilisateurevenement
+            {
+                IdEvenement = idEvenementDetails,
+                IdUtilisateur = (int)Context.GetHttpContext().Session.GetInt32("login")
+            };
+            bool reponse;
+            if (estParticipant)
+            {
+                reponse = await _client.DeleteParticipation(utilisateurEvenement);
+            }
+            else
+            {
+                reponse = await _client.AddParticipation(utilisateurEvenement);
+            }
+            if (!reponse)
+            {
+                await Clients.All.SendAsync("erreurParticipation");
+            }
         }
     }
 }

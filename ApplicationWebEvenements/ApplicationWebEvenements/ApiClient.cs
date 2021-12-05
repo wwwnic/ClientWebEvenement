@@ -155,13 +155,45 @@ namespace ApplicationWebEvenements
             {
                 var reponseJson = await reponse.Content.ReadAsStringAsync();
                 listeUtilisateur = JsonConvert.DeserializeObject<List<Utilisateur>>(reponseJson);
+                foreach(Utilisateur u in listeUtilisateur)
+                {
+                    u.LienImage = GetImageUtilisateur(u.IdUtilisateur);
+                }
             }
-            else
-            {
-                listeUtilisateur = null;
-            }
-
             return listeUtilisateur;
+        }
+
+        public async Task<bool> AddParticipation(Utilisateurevenement ue)
+        {
+            var json = JsonConvert.SerializeObject(ue, _authSetting);
+            var contenu = new StringContent(json, Encoding.UTF8, "application/json");
+            var reponse = await _httpClient.PostAsync(_url + "api/Utilisateur/addParticipation", contenu);
+            return reponse.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> DeleteParticipation(Utilisateurevenement ue)
+        {
+            var json = JsonConvert.SerializeObject(ue, _authSetting);
+            var contenu = new StringContent(json, Encoding.UTF8, "application/json");
+            var reponse = await _httpClient.PostAsync(_url + "api/Utilisateur/deleteParticipation", contenu);
+            return reponse.IsSuccessStatusCode;
+        }
+
+        public async Task<List<Commentaire>> GetCommentairesParEvenement(int idEvenement)
+        {
+            var reponse = await _httpClient.GetAsync(_url + "api/Commentaire/GetByEvenement?id="+ idEvenement);
+            List<Commentaire> commentaires = new List<Commentaire>();
+            if (reponse.IsSuccessStatusCode)
+            {
+                var reponseJson = await reponse.Content.ReadAsStringAsync();
+                commentaires = JsonConvert.DeserializeObject<List<Commentaire>>(reponseJson);
+                foreach (Commentaire c in commentaires)
+                {
+                    c.Utilisateur = await GetUtilisateurParId(c.IdUtilisateur);
+                    c.SetDateFormatéePourJS();
+                }
+            }
+            return commentaires;
         }
 
         public async Task<Utilisateur> Login(Utilisateur utilisateur)
