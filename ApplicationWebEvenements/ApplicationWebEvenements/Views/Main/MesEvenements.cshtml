@@ -44,38 +44,38 @@
                         }
                     </div>
                 </div>
-            <div class="card">
-                <div class="card-header">
-                    <a class="h2 font-weight-bold text-dark" data-toggle="collapse" href="#crees">
-                        Crées
-                    </a>
-                </div>
-                <div id="crees" class="collapse" data-parent="#menusMesEvens">
-                    <div class="card-body">
-                        @foreach (var e in Model.listeCrees)
-                        {
-                            <div class="card">
-                                <img class="card-img-top" src="@e.LienImage" alt="Image">
-                                <div class="card-header">
-                                    <h3>@e.NomEvenement</h3>
-                                </div>
-                                <div class="card-body">
-                                    <ul>
-                                        <li>@e.Location</li>
-                                        <li>@e.GetDateFormatée()</li>
-                                        <li>@e.Organisateur.NomUtilisateur</li>
-                                        <li>@e.Description</li>
-                                    </ul>
-                                </div>
-                                <div class="card-footer">
-                                    <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Modification", "Evenement",e)'">&#43; Modifier</button>
-                                </div>
+            </div>
+        <div class="card">
+            <div class="card-header">
+                <a class="h2 font-weight-bold text-dark" data-toggle="collapse" href="#crees">
+                    Crées
+                </a>
+            </div>
+            <div id="crees" class="collapse" data-parent="#menusMesEvens">
+                <div class="card-body">
+                    @foreach (var e in Model.listeCrees)
+                    {
+                        <div class="card">
+                            <img class="card-img-top" src="@e.LienImage" alt="Image">
+                            <div class="card-header">
+                                <h3>@e.NomEvenement</h3>
                             </div>
-                        }
-                    <div class="card-footer">
-                        <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Creer", "Evenement")'">&#43; Créer</button>
-                    </div>
-                    </div>
+                            <div class="card-body">
+                                <ul>
+                                    <li>@e.Location</li>
+                                    <li>@e.GetDateFormatée()</li>
+                                    <li>@e.Organisateur.NomUtilisateur</li>
+                                    <li>@e.Description</li>
+                                </ul>
+                            </div>
+                            <div class="card-footer">
+                                <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Modification", "Evenement",e)'">&#43; Modifier</button>
+                            </div>
+                        </div>
+                    }
+                <div class="card-footer">
+                    <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("Creer", "Evenement")'">&#43; Créer</button>
+                </div>
                 </div>
             </div>
         </div>
