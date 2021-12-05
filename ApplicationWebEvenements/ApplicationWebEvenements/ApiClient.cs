@@ -87,12 +87,46 @@ namespace ApplicationWebEvenements
                 evenement = JsonConvert.DeserializeObject<Evenement>(reponseJson);
                 evenement.Organisateur = await GetUtilisateurParId(evenement.IdOrganisateur);
                 evenement.LienImage = GetImageEvenement(evenement.IdEvenement);
+                evenement.IdEvenement = idEvenement;
             }
             else
             {
                evenement = null;
             }
             return evenement;
+        }
+
+        public async Task<Evenement> CreerEvenement(Evenement evenement)
+        {
+            var evenementJson = JsonConvert.SerializeObject(evenement, _authSetting);
+            var contenu = new StringContent(evenementJson, Encoding.UTF8, "application/json");
+            var reponse = await _httpClient.PostAsync(_url + "api/Evenement/New", contenu);
+            if (reponse.IsSuccessStatusCode)
+            {
+                var reponseJson = await reponse.Content.ReadAsStringAsync();
+                evenement = JsonConvert.DeserializeObject<Evenement>(reponseJson);
+                evenement.LienImage = GetImageEvenement(evenement.IdEvenement);
+                if (evenement.IdEvenement != 0)
+                {
+                    return evenement;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public async Task<bool> EditEvenement(Evenement evenement)
+        {
+            var evenementJson = JsonConvert.SerializeObject(evenement, _authSetting);
+            var contenu = new StringContent(evenementJson, Encoding.UTF8, "application/json");
+            var reponse = await _httpClient.PutAsync(_url + "api/Evenement/Update", contenu);
+            return reponse.IsSuccessStatusCode;
         }
 
         public async Task<Utilisateur> GetUtilisateurParId(int idUtilisateur)
