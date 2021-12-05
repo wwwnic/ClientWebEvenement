@@ -31,20 +31,22 @@
                 </ul>
             </div>
             <div class="card-footer">
+                <!-- On initialise le bouton avec la donnée du ViewBag, après c'est géré par le Javascript/SignalR.
+                    estParticipant(0) = Non-participant, (1) = Participant, (2) = Est l'organisateur -->
                 @if (estParticipant != 2)
                 {
                     if (estParticipant == 0)
                     {
-                        <a asp-controller="Evenement" asp-action="AddParticipation" class="btn btn-primary" style="color: white; background-color: rgb(138, 66, 255); border-color: white;">Je participe</a>
+                        <button onclick="participation(false)" id="btnParticipation" class="btn btn-primary figma-mauve">Je participe</button>
                     }
                     else
                     {
-                        <a asp-controller="Evenement" asp-action="DeleteParticipation" class="btn btn-danger" style="color: white; border-color: white;">Je ne participe pas</a>
+                        <button onclick="participation(true)" id="btnParticipation" class="btn btn-danger">Je ne participe pas</button>
                     }
                 }
                 else
                 {
-                    <strong>Vous êtes l'organisateur de cet événement.</strong>
+                    <strong>Vous êtes l'organisateur</strong>
                 }
             </div>
         </div>
@@ -107,6 +109,3 @@
 </div>
 <script src="~/js/signalr/signalr.js"></script>
 <script src="~/js/signalr/refreshDetails.js"></script>
-<script>
-    function gerer
-</script>

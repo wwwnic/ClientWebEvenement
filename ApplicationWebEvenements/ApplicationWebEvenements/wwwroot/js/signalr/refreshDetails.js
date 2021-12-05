@@ -31,6 +31,11 @@ connection.on("rafraichirCommentaires", function (message) {
     }
 });
 
+connection.on("erreurParticipation", function () {
+    var erreur = document.getElementById("texteErreur");
+    erreur.innerHTML = "Erreur de connexion";
+});
+
 connection.start().then(window.setInterval(function () {
     connection.invoke("RafraichirDetails").catch(function (err) {
         return console.error(err.toString());
@@ -66,4 +71,21 @@ function genererCommentaire(c) {
     carte.appendChild(body);
 
     return carte;
+}
+
+function participation(estParticipant) {
+    connection.invoke("ModifierParticipation", estParticipant).catch(function (err) {
+        return console.error(err.toString());
+    });
+    var btn = document.getElementById("btnParticipation");
+    if (estParticipant) {
+        btn.className = "btn btn-primary figma-mauve";
+        btn.innerHTML = "Je participe";
+        btn.onclick = function () { participation(false); };
+    }
+    else {
+        btn.className = "btn btn-danger";
+        btn.innerHTML = "Je ne participe pas";
+        btn.onclick = function () { participation(true); };
+    }
 }

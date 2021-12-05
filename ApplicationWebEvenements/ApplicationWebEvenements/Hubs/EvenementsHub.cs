@@ -56,5 +56,27 @@ namespace ApplicationWebEvenements.Hubs
                 await Clients.All.SendAsync("rafraichirCommentaires", listeJsonCommentaires);
             }
         }
+
+        public async Task ModifierParticipation(bool estParticipant)
+        {
+            var utilisateurEvenement = new Utilisateurevenement
+            {
+                IdEvenement = idEvenementDetails,
+                IdUtilisateur = (int)Context.GetHttpContext().Session.GetInt32("login")
+            };
+            bool reponse;
+            if (estParticipant)
+            {
+                reponse = await _client.DeleteParticipation(utilisateurEvenement);
+            }
+            else
+            {
+                reponse = await _client.AddParticipation(utilisateurEvenement);
+            }
+            if (!reponse)
+            {
+                await Clients.All.SendAsync("erreurParticipation");
+            }
+        }
     }
 }

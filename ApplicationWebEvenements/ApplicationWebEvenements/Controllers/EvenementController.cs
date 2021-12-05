@@ -50,47 +50,6 @@ namespace ApplicationWebEvenements.Controllers
 
         }
 
-        [Route("AddParticipation")]
-        public async Task<ActionResult> AddParticipation()
-        {
-            var evenement = await _client.GetEvenementParId(EvenementsHub.idEvenementDetails);
-            var utilisateurEvenement = new Utilisateurevenement
-            {
-                IdEvenement = EvenementsHub.idEvenementDetails,
-                IdUtilisateur = (int)HttpContext.Session.GetInt32("login")
-            };
-            var reponse = await _client.AddParticipation(utilisateurEvenement);
-            if(reponse)
-            {
-                return RedirectToAction("Details", new { idEvenement = EvenementsHub.idEvenementDetails });
-            }
-            else
-            {
-                ViewBag.messageErreur = "Erreur de connexion avec le service.";
-                return RedirectToAction("Details", new { idEvenement = EvenementsHub.idEvenementDetails });
-            }
-        }
-
-        [Route("DeleteParticipation")]
-        public async Task<ActionResult> DeleteParticipation()
-        {
-            var utilisateurEvenement = new Utilisateurevenement
-            {
-                IdEvenement = EvenementsHub.idEvenementDetails,
-                IdUtilisateur = (int)HttpContext.Session.GetInt32("login")
-            };
-            var reponse = await _client.DeleteParticipation(utilisateurEvenement);
-            if (reponse)
-            {
-                return RedirectToAction("Details", new { idEvenement = EvenementsHub.idEvenementDetails });
-            }
-            else
-            {
-                ViewBag.messageErreur = "Erreur de connexion avec le service.";
-                return RedirectToAction("Details", new { idEvenement = EvenementsHub.idEvenementDetails });
-            }
-        }
-
         [Route("")]
         public IActionResult Aucun()
         {
