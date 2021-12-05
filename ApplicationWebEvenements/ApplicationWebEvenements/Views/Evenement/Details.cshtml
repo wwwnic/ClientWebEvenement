@@ -1,6 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Détails de l'événement";
-    var liste = ViewBag.listeUtilisateur;
+    var estParticipant = ViewBag.estParticipant;
 }
 @model Evenement
 <div class="row">
@@ -12,6 +12,7 @@
 </div>
 
 <div class="row">
+    <span class="text-danger" id="texteErreur"></span>
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
@@ -29,28 +30,34 @@
                     <li class="h4">@Model.Description</li>
                 </ul>
             </div>
+            <div class="card-footer">
+                @if (estParticipant != 2)
+                {
+                    if (estParticipant == 0)
+                    {
+                        <a asp-controller="Evenement" asp-action="AddParticipation" class="btn btn-primary" style="color: white; background-color: rgb(138, 66, 255); border-color: white;">Je participe</a>
+                    }
+                    else
+                    {
+                        <a asp-controller="Evenement" asp-action="DeleteParticipation" class="btn btn-danger" style="color: white; border-color: white;">Je ne participe pas</a>
+                    }
+                }
+                else
+                {
+                    <strong>Vous êtes l'organisateur de cet événement.</strong>
+                }
+            </div>
         </div>
         <div id="menusDetails">
             <div class="card">
                 <div class="card-header">
-                    <a class="h3 font-weight-bold text-dark" data-toggle="collapse" href="#participants">
-                        Participants (@liste.Count)
+                    <a id="nbParticipants" class="h3 font-weight-bold text-dark" data-toggle="collapse" href="#participants">
+                        
                     </a>
                 </div>
                 <div id="participants" class="collapse" data-parent="#menusDetails">
                     <div class="card-body">
-                        <ul>                       
-                            @if (liste.Count > 0)
-                            {
-                                foreach (Utilisateur utilisateur in liste)
-                                {
-                                    <li>@utilisateur.NomUtilisateur</li>
-                                }
-                            } 
-                            else
-                            {
-                                <li>Aucun participant</li>
-                            }                        
+                        <ul id="conteneurParticipants">
                         </ul>
                     </div>
                 </div>
@@ -63,7 +70,9 @@
                 </div>
                 <div id="commentaires" class="collapse" data-parent="#menusDetails">
                     <div class="card-body">
-                        Mettre la liste de commentaires ici
+                        <div id="conteneurCommentaires">
+
+                        </div>
                         <div class="card-footer">
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalCommentaire">
                                 &#43; Nouveau commentaire
@@ -96,3 +105,8 @@
         </div>
     </div>
 </div>
+<script src="~/js/signalr/signalr.js"></script>
+<script src="~/js/signalr/refreshDetails.js"></script>
+<script>
+    function gerer
+</script>

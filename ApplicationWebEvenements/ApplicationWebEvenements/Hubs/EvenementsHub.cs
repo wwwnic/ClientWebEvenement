@@ -10,6 +10,7 @@ namespace ApplicationWebEvenements.Hubs
     {
         private readonly ApiClient _client = new ApiClient();
         private static string listePrésente = "";
+        public static int idEvenementDetails = 0;
 
         public override async Task OnConnectedAsync()
         {
@@ -39,14 +40,21 @@ namespace ApplicationWebEvenements.Hubs
             }
         }
 
-        public async Task RafraichirCommentaires()
+        public async Task RafraichirDetails()
         {
-            //TODO
-        }
-
-        public async Task RafraichirParticipants()
-        {
-            //TODO
+            var commentaires = await _client.GetCommentairesParEvenement(idEvenementDetails);
+            var participants = await _client.GetUtilisateurParEvenement(idEvenementDetails);
+            if (participants.Count == 0)
+            {
+                await Clients.All.SendAsync("rafraichirParticipants", "Erreur de connexion");
+            }
+            else
+            {
+                var listeJsonCommentaires = JsonConvert.SerializeObject(commentaires);
+                var listeJsonParticipants = JsonConvert.SerializeObject(participants);
+                await Clients.All.SendAsync("rafraichirParticipants", listeJsonParticipants);
+                await Clients.All.SendAsync("rafraichirCommentaires", listeJsonCommentaires);
+            }
         }
     }
 }
