@@ -28,7 +28,7 @@ namespace ApplicationWebEvenements.Models
         [Display(Name = "Date")]
         [DataType(DataType.DateTime)]
         [Required(ErrorMessage = "Date requise")]
-        public string Date {  get; set; }
+        public string Date { get; set; }
 
 
         [JsonProperty("idOrganisateur")]

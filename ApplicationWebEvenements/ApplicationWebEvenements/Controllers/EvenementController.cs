@@ -30,7 +30,7 @@ namespace ApplicationWebEvenements.Controllers
             {
                 return RedirectToAction("Aucun", "Evenement");
             }
-            
+
         }
 
         [Route("")]
