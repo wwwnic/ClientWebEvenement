@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 
 namespace ApplicationWebEvenements.Models
 {
-    public class Class
+    public class MesEvenements
     {
+        public List<Evenement> listePresences { get; set; }
+        public List<Evenement> listeCrees { get; set; }
     }
 }

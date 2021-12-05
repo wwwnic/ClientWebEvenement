@@ -16,7 +16,7 @@ namespace ApplicationWebEvenements
         public ApiClient()
         {
             _httpClient = new HttpClient();
-            _url = "http://192.168.50.164:23784/";
+            _url = "http://10.0.0.149:23784/";
             _httpClient.DefaultRequestHeaders.Add("ApiKey", "c72e11b4-3118-49a7-999a-e9895d94ad5d");
             _authSetting = new JsonSerializerSettings
             {
@@ -46,6 +46,23 @@ namespace ApplicationWebEvenements
         public async Task<List<Evenement>> GetEvenementsParOrganisateur(int id)
         {
             var reponse = await _httpClient.GetAsync(_url + "api/Evenement/GetParOrganisateur/"+id);
+            List<Evenement> evenements = new List<Evenement>();
+            if (reponse.IsSuccessStatusCode)
+            {
+                var reponseJson = await reponse.Content.ReadAsStringAsync();
+                evenements = JsonConvert.DeserializeObject<List<Evenement>>(reponseJson);
+                foreach (Evenement e in evenements)
+                {
+                    e.Organisateur = await GetUtilisateurParId(e.IdOrganisateur);
+                    e.LienImage = GetImageEvenement(e.IdEvenement);
+                }
+            }
+            return evenements;
+        }
+
+        public async Task<List<Evenement>> GetEvenementsParParticipant(int id)
+        {
+            var reponse = await _httpClient.GetAsync(_url + "api/Evenement/GetParParticipant/" + id);
             List<Evenement> evenements = new List<Evenement>();
             if (reponse.IsSuccessStatusCode)
             {

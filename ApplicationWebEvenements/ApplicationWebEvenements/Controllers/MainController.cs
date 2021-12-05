@@ -40,8 +40,14 @@ namespace ApplicationWebEvenements.Controllers
         [Route("MesEvenements")]
         public async Task<IActionResult> MesEvenements()
         {
-            var evenements = await _client.GetEvenementsParOrganisateur((int)HttpContext.Session.GetInt32("login"));
-            return View(evenements);
+            var presences = await _client.GetEvenementsParParticipant((int)HttpContext.Session.GetInt32("login"));
+            var crees = await _client.GetEvenementsParOrganisateur((int)HttpContext.Session.GetInt32("login"));
+            var modelVue = new MesEvenements
+            {
+                listePresences = presences,
+                listeCrees = crees
+            };
+            return View(modelVue);
         }
 
 

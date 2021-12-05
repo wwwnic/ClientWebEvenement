@@ -3,7 +3,7 @@
 }
 <h1>@ViewData["Title"]</h1>
 
-@model List<Evenement>
+@model MesEvenements
 
 <div class="row">
     <div class="col-md-12" id="menusMesEvens">
@@ -15,10 +15,35 @@
             </div>
             <div id="presences" class="collapse show" data-parent="#menusMesEvens">
                 <div class="card-body">
-                    Mettre la liste des présences ici
+                    @if (Model.listePresences.Count != 0)
+                    {
+                        @foreach (var e in Model.listePresences)
+                        {
+                        <div class="card">
+                            <img class="card-img-top" src="@e.LienImage" alt="Image">
+                            <div class="card-header">
+                                <h3>@e.NomEvenement</h3>
+                            </div>
+                            <div class="card-body">
+                                <ul>
+                                    <li>@e.Location</li>
+                                    <li>@e.GetDateFormatée()</li>
+                                    <li>@e.Organisateur.NomUtilisateur</li>
+                                    <li>@e.Description</li>
+                                </ul>
+                            </div>
+                            <div class="card-footer text-center">
+                                <a asp-controller="Evenement" asp-action="@e.IdEvenement" class="btn btn-primary" style="color: white; background-color: rgb(138, 66, 255); border-color: white;">Voir les détails</a>
+                            </div>
+                        </div>
+                        }
+                    } 
+                    else
+                    {
+                        <h4>Vous ne participez à aucun événement.</h4>
+                    }
                 </div>
             </div>
-        </div>
         <div class="card">
             <div class="card-header">
                 <a class="h2 font-weight-bold text-dark" data-toggle="collapse" href="#crees">
@@ -27,44 +52,50 @@
             </div>
             <div id="crees" class="collapse" data-parent="#menusMesEvens">
                 <div class="card-body">
-                    @foreach(var e in Model)
+                    @if (Model.listeCrees.Count != 0)
                     {
-                    <div class="card">
-                        <img class="card-img-top" src="@e.LienImage" alt="Image">
-                        <div class="card-header">
-                            <h3>@e.NomEvenement</h3>
-                        </div>
-                        <div class="card-body">
-                            <ul>
-                                <li>@e.Location</li>
-                                <li>@e.GetDateFormatée()</li>
-                                <li>@e.Organisateur.NomUtilisateur</li>
-                                <li>@e.Description</li>
-                            </ul>
-                        </div>
-                        <div class="card-footer">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalModification">
-                                Modifier/Annuler
-                            </button>
+                        @foreach (var e in Model.listeCrees)
+                        {
+                            <div class="card">
+                                <img class="card-img-top" src="@e.LienImage" alt="Image">
+                                <div class="card-header">
+                                    <h3>@e.NomEvenement</h3>
+                                </div>
+                                <div class="card-body">
+                                    <ul>
+                                        <li>@e.Location</li>
+                                        <li>@e.GetDateFormatée()</li>
+                                        <li>@e.Organisateur.NomUtilisateur</li>
+                                        <li>@e.Description</li>
+                                    </ul>
+                                </div>
+                                <div class="card-footer">
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalModification">
+                                        Modifier/Annuler
+                                    </button>
 
-                            <!-- Dialogue de modification d'événement -->
-                            <div class="modal" id="modalModification">
-                                <div class="modal-dialog modal-dialog-centered modal-lg">
-                                    <div class="modal-content">
-                                        <!-- Entête -->
-                                        <div class="modal-header">
-                                            <h3 class="modal-title">Modifier l'événement</h3>
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        </div>
-                                        <!-- Corps -->
-                                        <div class="modal-body">
-                                            Insérer formulaire ici
+                                    <!-- Dialogue de modification d'événement -->
+                                    <div class="modal" id="modalModification">
+                                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                                            <div class="modal-content">
+                                                <!-- Entête -->
+                                                <div class="modal-header">
+                                                    <h3 class="modal-title">Modifier l'événement</h3>
+                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                </div>
+                                                <!-- Corps -->
+                                                <div class="modal-body">
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                        }
+                    }
+                    else
+                    {
+                        <h4>Vous n'avez organisé aucun événement.</h4>
                     }
                     <div class="card-footer">
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalCreation">
@@ -98,4 +129,3 @@
     </div>
 </div>
 <script src="~/js/signalr/signalr.js"></script>
-<script src="~/js/signalr/refreshMesEvens.js"></script>

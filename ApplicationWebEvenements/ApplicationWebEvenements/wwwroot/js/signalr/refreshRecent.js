@@ -67,6 +67,7 @@ function genererCarteEvenement(e) {
     buttonDiv.style.textAlign = "center";
 
     var btn = document.createElement("button");
+    btn.className = "btn btn-primary";
 
     btn.style.color = "white";
     btn.style.backgroundColor = "#8a42ff";
