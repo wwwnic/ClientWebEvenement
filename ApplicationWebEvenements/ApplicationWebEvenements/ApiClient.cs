@@ -70,6 +70,7 @@ namespace ApplicationWebEvenements
                 evenement = JsonConvert.DeserializeObject<Evenement>(reponseJson);
                 evenement.Organisateur = await GetUtilisateurParId(evenement.IdOrganisateur);
                 evenement.LienImage = GetImageEvenement(evenement.IdEvenement);
+                evenement.IdEvenement = idEvenement;
             }
             else
             {
@@ -87,6 +88,7 @@ namespace ApplicationWebEvenements
             {
                 var reponseJson = await reponse.Content.ReadAsStringAsync();
                 evenement = JsonConvert.DeserializeObject<Evenement>(reponseJson);
+                evenement.LienImage = GetImageEvenement(evenement.IdEvenement);
                 if (evenement.IdEvenement != 0)
                 {
                     return evenement;

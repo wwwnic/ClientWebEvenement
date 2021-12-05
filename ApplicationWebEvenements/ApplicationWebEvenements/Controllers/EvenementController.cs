@@ -41,6 +41,11 @@ namespace ApplicationWebEvenements.Controllers
 
 
 
+        /// <summary>
+        /// Ajoute un evenement via l'api
+        /// </summary>
+        /// <param name="model">le modele Evenement</param>
+        /// <returns>La prochaine vue</returns>
         [Route("Creer")]
         public IActionResult Creer(Evenement model)
         {
@@ -50,7 +55,8 @@ namespace ApplicationWebEvenements.Controllers
             bool estUnModeleInstancié = model.NomEvenement?.Length > 1;
             if (estUnModeleInstancié)
             {
-                return SoumettreEvenement(model, idUtilisateurSession);
+                model.IdOrganisateur = (int)idUtilisateurSession;
+                return SoumettreEvenement(model, false);
             }
             else if (idUtilisateurSession != null)
             {
@@ -59,14 +65,68 @@ namespace ApplicationWebEvenements.Controllers
             return RedirectToAction("Index", "Evenement");
         }
 
-        private IActionResult SoumettreEvenement(Evenement model, int? idUtilisateurSession)
-        {
-            model.IdOrganisateur = (int)idUtilisateurSession;
 
-            Evenement evenementCrée = null;
+
+        /// <summary>
+        /// Permet d'afficher la vue modifier evenement
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns>Le modele evenement</returns>
+        [Route("Modification")]
+        public IActionResult Modification(Evenement model)
+        {
+            return View("Modifier",model);
+        }
+
+
+
+        /// <summary>
+        /// Modifie un evenement via l'api
+        /// </summary>
+        /// <param name="model">le modele Evenemenet</param>
+        /// <returns>La prochaine vue</returns>
+        /// 
+        [Route("Modifier")]
+        public IActionResult Modifier(Evenement model)
+        {
+            var idUtilisateurSession = HttpContext.Session.GetInt32("login");
+            if (idUtilisateurSession == null) return RedirectToAction("Login", "Authentification");
+
+            bool estUnModeleInstancié = model.NomEvenement?.Length > 1;
+            if (estUnModeleInstancié)
+            {
+                model.IdOrganisateur = (int)idUtilisateurSession;
+                return SoumettreEvenement(model, true);
+            }
+            else if (idUtilisateurSession != null)
+            {
+                return View();
+            }
+            return RedirectToAction("Index", "Evenement");
+        }
+
+
+        /// <summary>
+        /// Permet de soumettre un evenement
+        /// </summary>
+        /// <param name="model">le modele evenement</param>
+        /// <param name="editerEvenement">Indique si l'evenement doit etre crée ou edité</param>
+        /// <returns>La prochaine vue</returns>
+        private IActionResult SoumettreEvenement(Evenement model, bool editerEvenement)
+        {
+            Evenement evenementCréé = null;
             try
             {
-                evenementCrée = _client.CreerEvenement(model).Result;
+                if (editerEvenement)
+                {
+                    bool estReussi = _client.EditEvenement(model).Result;
+                    if (estReussi)
+                        return RedirectToAction($"{model.IdEvenement}", "Evenement");
+                }
+                else
+                {
+                    evenementCréé = _client.CreerEvenement(model).Result;
+                }
             }
             catch
             {
@@ -74,11 +134,23 @@ namespace ApplicationWebEvenements.Controllers
                 return View(model);
 
             }
+            return VerifierInstanciationEvenement(model, evenementCréé);
+        }
 
-            bool estUnEvenementInstancié = evenementCrée != null && evenementCrée.IdEvenement != 0;
+
+        /// <summary>
+        /// Retourne la vue details evenement si l'evenement a des données 
+        /// ou reviens à la vue creation evenement avec un message d'erreur 
+        /// </summary>
+        /// <param name="model">le model evenement</param>
+        /// <param name="evenementCréé">l'evenement retourné par l'api</param>
+        /// <returns></returns>
+        private IActionResult VerifierInstanciationEvenement(Evenement model, Evenement evenementCréé)
+        {
+            bool estUnEvenementInstancié = evenementCréé != null && evenementCréé.IdEvenement != 0;
             if (estUnEvenementInstancié)
             {
-                return RedirectToAction($"{evenementCrée.IdEvenement}", "Evenement");
+                return RedirectToAction($"{evenementCréé.IdEvenement}", "Evenement");
             }
             else
             {
