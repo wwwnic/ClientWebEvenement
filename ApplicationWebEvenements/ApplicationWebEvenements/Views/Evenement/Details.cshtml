@@ -54,7 +54,7 @@
             <div class="card">
                 <div class="card-header">
                     <a id="nbParticipants" class="h3 font-weight-bold text-dark" data-toggle="collapse" href="#participants">
-                        
+
                     </a>
                 </div>
                 <div id="participants" class="collapse" data-parent="#menusDetails">
@@ -70,36 +70,31 @@
                         Commentaires
                     </a>
                 </div>
-                <div id="commentaires" class="collapse" data-parent="#menusDetails">
+                <div id="commentaires" data-parent="#menusDetails">
                     <div class="card-body">
                         <div id="conteneurCommentaires">
 
                         </div>
                         <div class="card-footer">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalCommentaire">
-                                &#43; Nouveau commentaire
-                            </button>
-
-                            <!-- Dialogue de création de commentaire -->
-                            <div class="modal" id="modalCommentaire">
-                                <div class="modal-dialog modal-dialog-centered modal-lg">
-                                    <div class="modal-content">
-                                        <!-- Entête -->
-                                        <div class="modal-header">
-                                            <h3 class="modal-title">Nouveau commentaire</h3>
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        </div>
-                                        <!-- Corps -->
-                                        <div class="modal-body">
-                                            Insérer formulaire ici
-                                        </div>
-                                        <!-- Pied -->
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-primary">Créer</button>
-                                        </div>
+                            @using (Html.BeginForm("SoumettreCommentaire", "Evenement", Model))
+                            {
+                                <br />
+                                if (ViewBag?.messageErreur != null)
+                                {
+                                    <div class="alert alert-danger alert-dismissible" role="alert">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <strong>@ViewBag.messageErreur</strong>
                                     </div>
+                                }
+                                <div>
+                                    <Strong>Nouveau commentaire</Strong>
+                                    @Html.EditorFor(model => model.Commentaire, new { htmlAttributes = new { @class = "form-control" } })
                                 </div>
-                            </div>
+                                <br />
+                                <div class="d-flex justify-content-center">
+                                    <button class="btn btn-primary btn-lg">Envoyer</button>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>

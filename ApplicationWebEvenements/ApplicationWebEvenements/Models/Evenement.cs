@@ -53,6 +53,9 @@ namespace ApplicationWebEvenements.Models
             return dateHeure[0] + " " + dateHeure[1];
         }
 
+        [JsonIgnore]
+        [Display(Name = "Commentaire")]
+        public string Commentaire { get; set; }
 
         public void SetDateFormatéePourJS()
         {

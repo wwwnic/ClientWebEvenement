@@ -16,7 +16,7 @@ namespace ApplicationWebEvenements
         public ApiClient()
         {
             _httpClient = new HttpClient();
-            _url = "http://10.0.0.149:23784/";
+            _url = "http://localhost:23784/";
             _httpClient.DefaultRequestHeaders.Add("ApiKey", "c72e11b4-3118-49a7-999a-e9895d94ad5d");
             _authSetting = new JsonSerializerSettings
             {
@@ -195,6 +195,16 @@ namespace ApplicationWebEvenements
             }
             return commentaires;
         }
+
+
+        public async Task<bool> AddCommentaire(Commentaire commentaire)
+        {
+            var CommentaireJson = JsonConvert.SerializeObject(commentaire, _authSetting);
+            var contenu = new StringContent(CommentaireJson, Encoding.UTF8, "application/json");
+            var reponse = await _httpClient.PostAsync(_url + "api/Commentaire/New", contenu);
+            return reponse.IsSuccessStatusCode;
+        }
+
 
         public async Task<Utilisateur> Login(Utilisateur utilisateur)
         {
