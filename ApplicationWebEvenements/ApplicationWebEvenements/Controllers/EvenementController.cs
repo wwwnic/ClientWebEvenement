@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using ApplicationWebEvenements.Hubs;
+using System;
 
 namespace ApplicationWebEvenements.Controllers
 {
@@ -56,6 +57,24 @@ namespace ApplicationWebEvenements.Controllers
             return View();
         }
 
+
+        /// <summary>
+        /// Ajoute un evenement via l'api
+        /// </summary>
+        /// <param name="model">le modele Evenement</param>
+        /// <returns>La prochaine vue</returns>
+        [Route("SoumettreCommentaire")]
+        public IActionResult SoumettreCommentaireAsync(Evenement model)
+        {
+            var commentaire = new Commentaire();
+            commentaire.IdEvenement = model.IdEvenement;
+            commentaire.IdUtilisateur = (int)HttpContext.Session.GetInt32("login");
+            commentaire.Date = model.Date;//
+            commentaire.Texte = model.Commentaire;
+            _client.AddCommentaire(commentaire);
+            return RedirectToAction($"{model.IdEvenement}", "Evenement");
+
+        }
 
 
         /// <summary>

@@ -222,6 +222,16 @@ namespace ApplicationWebEvenements
             return commentaires;
         }
 
+
+        public async Task<bool> AddCommentaire(Commentaire commentaire)
+        {
+            var CommentaireJson = JsonConvert.SerializeObject(commentaire, _authSetting);
+            var contenu = new StringContent(CommentaireJson, Encoding.UTF8, "application/json");
+            var reponse = await _httpClient.PostAsync(_url + "api/Commentaire/New", contenu);
+            return reponse.IsSuccessStatusCode;
+        }
+
+
         public async Task<Utilisateur> Login(Utilisateur utilisateur)
         {
             var userJson = JsonConvert.SerializeObject(utilisateur,_authSetting);

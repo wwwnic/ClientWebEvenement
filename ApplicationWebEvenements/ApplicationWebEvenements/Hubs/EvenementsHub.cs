@@ -47,7 +47,7 @@ namespace ApplicationWebEvenements.Hubs
             if (participants.Count == 0)
             {
                 await Clients.All.SendAsync("rafraichirParticipants", "Erreur de connexion");
-            }
+            } 
             else
             {
                 var listeJsonCommentaires = JsonConvert.SerializeObject(commentaires);
