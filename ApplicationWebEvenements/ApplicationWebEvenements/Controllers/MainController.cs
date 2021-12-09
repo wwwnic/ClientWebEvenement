@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
@@ -32,9 +33,19 @@ namespace ApplicationWebEvenements.Controllers
         }
 
         [Route("Recherche")]
+        [HttpGet]
         public IActionResult Recherche()
         {
-            return View();
+            List<Evenement> listeVide = new List<Evenement>();
+            return View(listeVide);
+        }
+
+        [Route("Recherche")]
+        [HttpPost]
+        public async Task<IActionResult> Recherche(Recherche recherche)
+        {
+            var evenements = await _client.GetEvenementsParRecherche(recherche);
+            return View(evenements);
         }
 
         [Route("MesEvenements")]
