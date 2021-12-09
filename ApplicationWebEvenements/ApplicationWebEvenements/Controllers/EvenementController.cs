@@ -64,14 +64,14 @@ namespace ApplicationWebEvenements.Controllers
         /// <param name="model">le modele Evenement</param>
         /// <returns>La prochaine vue</returns>
         [Route("SoumettreCommentaire")]
-        public IActionResult SoumettreCommentaireAsync(Evenement model)
+        public async Task<IActionResult> SoumettreCommentaireAsync(Evenement model)
         {
             var commentaire = new Commentaire();
             commentaire.IdEvenement = model.IdEvenement;
             commentaire.IdUtilisateur = (int)HttpContext.Session.GetInt32("login");
-            commentaire.Date = model.Date;//
+            commentaire.Date = model.Date;
             commentaire.Texte = model.Commentaire;
-            _client.AddCommentaire(commentaire);
+            await _client.AddCommentaire(commentaire);
             return RedirectToAction($"{model.IdEvenement}", "Evenement");
 
         }

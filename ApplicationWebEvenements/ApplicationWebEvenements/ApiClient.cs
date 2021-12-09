@@ -14,6 +14,9 @@ namespace ApplicationWebEvenements
         private string _url;
         private JsonSerializerSettings _authSetting;
 
+        /// <summary>
+        /// Client pour accéder aux méthodes de l'API avec authetification par clé API
+        /// </summary>
         public ApiClient()
         {
             _httpClient = new HttpClient();
@@ -27,6 +30,10 @@ namespace ApplicationWebEvenements
 
         }
 
+        /// <summary>
+        /// Retourne les événements récents
+        /// </summary>
+        /// <returns>La liste d'événements par date ascendante</returns>
         public async Task<List<Evenement>> GetEvenementsRecents()
         {
             var reponse = await _httpClient.GetAsync(_url + "api/Evenement/GetRecent");
@@ -44,6 +51,11 @@ namespace ApplicationWebEvenements
             return evenements;
         }
 
+        /// <summary>
+        /// Retourne les evenements d'un organisateur donné
+        /// </summary>
+        /// <param name="id">Id de l'organisateur</param>
+        /// <returns>La liste d'événements</returns>
         public async Task<List<Evenement>> GetEvenementsParOrganisateur(int id)
         {
             var reponse = await _httpClient.GetAsync(_url + "api/Evenement/GetParOrganisateur/"+id);
@@ -61,6 +73,11 @@ namespace ApplicationWebEvenements
             return evenements;
         }
 
+        /// <summary>
+        /// Retourne les evenements auxquels l'utilisateur donné participe
+        /// </summary>
+        /// <param name="id">Id de l'utilisateur</param>
+        /// <returns>La liste d'événement</returns>
         public async Task<List<Evenement>> GetEvenementsParParticipant(int id)
         {
             var reponse = await _httpClient.GetAsync(_url + "api/Evenement/GetParParticipant/" + id);
@@ -78,6 +95,11 @@ namespace ApplicationWebEvenements
             return evenements;
         }
 
+        /// <summary>
+        /// Retourne un événement par son ID
+        /// </summary>
+        /// <param name="idEvenement">Id événement</param>
+        /// <returns>L'événement</returns>
         public async Task<Evenement> GetEvenementParId(int idEvenement)
         {
             var reponse = await _httpClient.GetAsync(_url + "api/Evenement/GetById?id=" + idEvenement);
@@ -97,12 +119,22 @@ namespace ApplicationWebEvenements
             return evenement;
         }
 
+        /// <summary>
+        /// Retourne la liste d'événements qui correspondent aux mot cles donnés
+        /// </summary>
+        /// <param name="recherche">Mot-clés de la recherche</param>
+        /// <returns>Liste d'événements</returns>
         public async Task<List<Evenement>> GetEvenementsParRecherche(Recherche recherche)
         {
+            var mois = recherche.Mois;
+            if (mois != null)
+            {
+                mois = recherche.Mois.Substring(0, 7);
+            }
             var query = new Dictionary<string, string>()
             {
                 ["nom"] = recherche.Nom,
-                ["mois"] = recherche.Mois,
+                ["mois"] = mois,
                 ["location"] = recherche.Location,
                 ["organisateur"] = recherche.Organisateur
             };
@@ -122,6 +154,11 @@ namespace ApplicationWebEvenements
             return evenements;
         }
 
+        /// <summary>
+        /// Crée un événement dans la base de données
+        /// </summary>
+        /// <param name="evenement">L'événement à insérer</param>
+        /// <returns>L'événement après son insertion</returns>
         public async Task<Evenement> CreerEvenement(Evenement evenement)
         {
             var evenementJson = JsonConvert.SerializeObject(evenement, _authSetting);
@@ -147,6 +184,11 @@ namespace ApplicationWebEvenements
             }
         }
 
+        /// <summary>
+        /// Modifie un événement
+        /// </summary>
+        /// <param name="evenement">L'événement avec les modifications</param>
+        /// <returns>La réponse de la requete</returns>
         public async Task<bool> EditEvenement(Evenement evenement)
         {
             var evenementJson = JsonConvert.SerializeObject(evenement, _authSetting);
@@ -155,6 +197,11 @@ namespace ApplicationWebEvenements
             return reponse.IsSuccessStatusCode;
         }
 
+        /// <summary>
+        /// Retoune un utilisateur par son id
+        /// </summary>
+        /// <param name="idUtilisateur">L'id recherché</param>
+        /// <returns>Un utilisateur</returns>
         public async Task<Utilisateur> GetUtilisateurParId(int idUtilisateur)
         {
             var reponse = await _httpClient.GetAsync(_url + "api/Utilisateur/GetById?id=" + idUtilisateur);
@@ -172,6 +219,11 @@ namespace ApplicationWebEvenements
             return utilisateur;
         }
 
+        /// <summary>
+        /// Retourne les utilisateurs qui participent à un événement
+        /// </summary>
+        /// <param name="idEvenement">L'id de l'événement</param>
+        /// <returns>La liste d'utilisateurs</returns>
         public async Task<List<Utilisateur>> GetUtilisateurParEvenement(int idEvenement)
         {
             var reponse = await _httpClient.GetAsync(_url + "api/Utilisateur/GetByEvent?idEvenement=" + idEvenement);
@@ -189,6 +241,11 @@ namespace ApplicationWebEvenements
             return listeUtilisateur;
         }
 
+        /// <summary>
+        /// Ajoute une participation à un événement
+        /// </summary>
+        /// <param name="ue">L'association utilisateur-événement</param>
+        /// <returns>La réponse de la requete</returns>
         public async Task<bool> AddParticipation(Utilisateurevenement ue)
         {
             var json = JsonConvert.SerializeObject(ue, _authSetting);
@@ -197,6 +254,11 @@ namespace ApplicationWebEvenements
             return reponse.IsSuccessStatusCode;
         }
 
+        /// <summary>
+        /// Retire une participation à un événement
+        /// </summary>
+        /// <param name="ue">L'association utilisateur-événement</param>
+        /// <returns>La réponse de la requete</returns>
         public async Task<bool> DeleteParticipation(Utilisateurevenement ue)
         {
             var json = JsonConvert.SerializeObject(ue, _authSetting);
@@ -205,6 +267,11 @@ namespace ApplicationWebEvenements
             return reponse.IsSuccessStatusCode;
         }
 
+        /// <summary>
+        /// Retourne la liste de commentaires d'un événement
+        /// </summary>
+        /// <param name="idEvenement">id de l'événement</param>
+        /// <returns>La liste de commentaires</returns>
         public async Task<List<Commentaire>> GetCommentairesParEvenement(int idEvenement)
         {
             var reponse = await _httpClient.GetAsync(_url + "api/Commentaire/GetByEvenement?id="+ idEvenement);
@@ -222,7 +289,11 @@ namespace ApplicationWebEvenements
             return commentaires;
         }
 
-
+        /// <summary>
+        /// Ajoute un commentaire.
+        /// </summary>
+        /// <param name="commentaire">Commentaire à ajouter (Contient l'id de l'événement)</param>
+        /// <returns>La réponse de la requete</returns>
         public async Task<bool> AddCommentaire(Commentaire commentaire)
         {
             var CommentaireJson = JsonConvert.SerializeObject(commentaire, _authSetting);
@@ -231,7 +302,11 @@ namespace ApplicationWebEvenements
             return reponse.IsSuccessStatusCode;
         }
 
-
+        /// <summary>
+        /// Fonction de login via le service
+        /// </summary>
+        /// <param name="utilisateur">L'utilisateur qui se login</param>
+        /// <returns>La réponse de la requete</returns>
         public async Task<Utilisateur> Login(Utilisateur utilisateur)
         {
             var userJson = JsonConvert.SerializeObject(utilisateur,_authSetting);
@@ -256,6 +331,12 @@ namespace ApplicationWebEvenements
             }
 
         }
+
+        /// <summary>
+        /// Création d'un compte utilisateur
+        /// </summary>
+        /// <param name="utilisateur">Utilisateur à créer</param>
+        /// <returns>La réponse de la requete</returns>
         public async Task<bool> SignUp(Utilisateur utilisateur)
         {
             var userJson = JsonConvert.SerializeObject(utilisateur, _authSetting);
@@ -264,7 +345,11 @@ namespace ApplicationWebEvenements
             return reponse.IsSuccessStatusCode;
         }
 
-
+        /// <summary>
+        /// Modifier un compte
+        /// </summary>
+        /// <param name="utilisateur">Utilisateur modifié</param>
+        /// <returns>La réponse de la requete</returns>
         public async Task<bool> EditAccount(Utilisateur utilisateur)
         {
             var userJson = JsonConvert.SerializeObject(utilisateur, _authSetting);

@@ -20,6 +20,11 @@ namespace ApplicationWebEvenements.Controllers
             _client = new ApiClient();
         }
 
+
+        /// <summary>
+        /// Retourne la page des événements récents
+        /// </summary>
+        /// <returns>La vue événements récents</returns>
         [Route("")]
         public IActionResult Index()
         {
@@ -32,6 +37,10 @@ namespace ApplicationWebEvenements.Controllers
             }
         }
 
+        /// <summary>
+        /// Affichage de la page Recherche.
+        /// </summary>
+        /// <returns>Vue avec liste vide</returns>
         [Route("Recherche")]
         [HttpGet]
         public IActionResult Recherche()
@@ -40,6 +49,11 @@ namespace ApplicationWebEvenements.Controllers
             return View(listeVide);
         }
 
+        /// <summary>
+        /// Affichage des résultats de la recherche
+        /// </summary>
+        /// <param name="recherche">Mot cles de la recherche</param>
+        /// <returns>La liste d'événements recherchés</returns>
         [Route("Recherche")]
         [HttpPost]
         public async Task<IActionResult> Recherche(Recherche recherche)
@@ -48,6 +62,10 @@ namespace ApplicationWebEvenements.Controllers
             return View(evenements);
         }
 
+        /// <summary>
+        /// Retourne la vue Mes Événements
+        /// </summary>
+        /// <returns>La vue avec les liste de présences et d'événements crées</returns>
         [Route("MesEvenements")]
         public async Task<IActionResult> MesEvenements()
         {

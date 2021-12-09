@@ -17,6 +17,9 @@ namespace ApplicationWebEvenements.Hubs
             await Clients.All.SendAsync("actionRafraichir", listePrésente);
         }
 
+        /// <summary>
+        /// Rafraichit automatiquement la liste d'événements récents
+        /// </summary>
         public async Task RafraichirEvenementsRecents()
         {
             var evenements = await _client.GetEvenementsRecents();
@@ -40,6 +43,10 @@ namespace ApplicationWebEvenements.Hubs
             }
         }
 
+        /// <summary>
+        /// Rafraichit automatiquement la liste de participants et de commentaires sur la page de détails
+        /// d'un événement
+        /// </summary>
         public async Task RafraichirDetails()
         {
             var commentaires = await _client.GetCommentairesParEvenement(idEvenementDetails);
@@ -57,6 +64,10 @@ namespace ApplicationWebEvenements.Hubs
             }
         }
 
+        /// <summary>
+        /// Modifie la participation de l'utilisateur à un événement quand il appuie sur le bouton
+        /// </summary>
+        /// <param name="estParticipant">Détermine si l'utilisateur est présentement un participant ou non</param>
         public async Task ModifierParticipation(bool estParticipant)
         {
             var utilisateurEvenement = new Utilisateurevenement
