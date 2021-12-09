@@ -3,74 +3,91 @@
     ViewData["Title"] = "Recherche d'événement";
     var recherche = new Recherche();
 }
+
+<head>
+    <style>
+        .wrapper {
+            display: grid;
+            grid-template-columns: 9fr 10fr 9fr;
+        }
+    </style>
+</head>
+
 <h1>@ViewData["Title"]</h1>
 
-<div class="wrapper row justify-content-center">
-    @using (Html.BeginForm("Recherche","Main", FormMethod.Post))
-    {
-        <br />
-        if (ViewBag?.messageErreur != null)
+<body>
+    <div class="wrapper">
+        <div></div>
+        @using (Html.BeginForm("Recherche", "Main", FormMethod.Post))
         {
-            <div class="alert alert-danger alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <strong>@ViewBag.messageErreur</strong>
+            <br />
+            if (ViewBag?.messageErreur != null)
+            {
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>@ViewBag.messageErreur</strong>
+                </div>
+            }
+            <div>
+                <strong>@Html.LabelFor(r => recherche.Nom)</strong>
+                @Html.EditorFor(r => recherche.Nom, new { htmlAttributes = new { @class = "form-control" } })
+
+                @Html.ValidationMessageFor(r => recherche.Nom, "", new { @class = "text-danger" })
+                <br />
+            </div>
+            <div>
+                <strong>@Html.LabelFor(r => recherche.Mois)</strong>
+                @Html.EditorFor(r => recherche.Mois, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(r => recherche.Mois, "", new { @class = "text-danger" })
+                <br />
+            </div>
+            <div>
+                <strong> @Html.LabelFor(r => recherche.Location)</strong>
+                @Html.EditorFor(r => recherche.Location, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(r => recherche.Location, "", new { @class = "text-danger" })
+                <br />
+            </div>
+            <div>
+                <strong>@Html.LabelFor(r => recherche.Organisateur)</strong>
+                @Html.EditorFor(r => recherche.Organisateur, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(r => recherche.Organisateur, "", new { @class = "text-danger" })
+            </div>
+            <br />
+            <br />
+            <div class="d-flex justify-content-center">
+                <button asp-controller="Main" asp-action="Recherche" class="btn btn-primary btn-lg center">Rechercher</button>
             </div>
         }
-        <div>
-            <strong>@Html.LabelFor(r => recherche.Nom)</strong>
-            @Html.EditorFor(r => recherche.Nom, new { htmlAttributes = new { @class = "form-control" } })
-
-            @Html.ValidationMessageFor(r => recherche.Nom, "", new { @class = "text-danger" })
-            <br />
-        </div>
-        <div>
-            <strong>@Html.LabelFor(r => recherche.Mois)</strong>
-            @Html.EditorFor(r => recherche.Mois, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(r => recherche.Mois, "", new { @class = "text-danger" })
-            <br />
-        </div>
-        <div>
-            <strong> @Html.LabelFor(r => recherche.Location)</strong>
-            @Html.EditorFor(r => recherche.Location, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(r => recherche.Location, "", new { @class = "text-danger" })
-            <br />
-        </div>
-        <div>
-            <strong>@Html.LabelFor(r => recherche.Organisateur)</strong>
-            @Html.EditorFor(r => recherche.Organisateur, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(r => recherche.Organisateur, "", new { @class = "text-danger" })
-        </div>
-        <br />
-        <br />
-        <div class="d-flex justify-content-center">
-            <button asp-controller="Main" asp-action="Recherche" class="btn btn-primary btn-lg center">Rechercher</button>
-        </div>
-    }
-</div>
-<h2>Résultats</h2>
-<div class="row">
-    @foreach (var e in Model)
-    {
-        <div class="card">
-            <img class="card-img-top" src="@e.LienImage" alt="Image">
-            <div class="card-header">
-                <h3>@e.NomEvenement</h3>
+        <div></div>
+    </div>
+    <br />
+    <hr />
+    <br />
+    <h2>Résultats</h2>
+    <div class="row">
+        @foreach (var e in Model)
+        {
+            <div class="card">
+                <img class="card-img-top" src="@e.LienImage" alt="Image">
+                <div class="card-header">
+                    <h3>@e.NomEvenement</h3>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li>@e.Location</li>
+                        <li>@e.GetDateFormatée()</li>
+                        <li>@e.Organisateur.NomUtilisateur</li>
+                        <li>@e.Description</li>
+                    </ul>
+                </div>
+                <div class="card-footer text-center">
+                    <a asp-controller="Evenement" asp-action="@e.IdEvenement" class="btn btn-primary" style="color: white; background-color: rgb(138, 66, 255); border-color: white;">Voir les détails</a>
+                </div>
             </div>
-            <div class="card-body">
-                <ul>
-                    <li>@e.Location</li>
-                    <li>@e.GetDateFormatée()</li>
-                    <li>@e.Organisateur.NomUtilisateur</li>
-                    <li>@e.Description</li>
-                </ul>
-            </div>
-            <div class="card-footer text-center">
-                <a asp-controller="Evenement" asp-action="@e.IdEvenement" class="btn btn-primary" style="color: white; background-color: rgb(138, 66, 255); border-color: white;">Voir les détails</a>
-            </div>
-        </div>
-    }
-    @if (Model.Count == 0)
-    {
-        <strong>Aucun événement trouvé.</strong>
-    }
-</div>
+        }
+        @if (Model.Count == 0)
+        {
+            <strong>Aucun événement trouvé.</strong>
+        }
+    </div>
+</body>
