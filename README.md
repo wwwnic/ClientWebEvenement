@@ -2,11 +2,9 @@
 
 Ce projet est une application web développée en ASP.NET MVC, réalisée dans le cadre d'un projet scolaire au CEGEP.
 
-![ScreenShot](/images/screenShot.png)
-
 ## Contributeurs
 
-* [Nicolas Brunet](https://github.com/wwwnic)
+* Nicolas Brunet
 * Martin-Cyr Samuel
 * Gauthier Olivier
 
@@ -22,6 +20,29 @@ Voici une liste des fonctionnalités offertes par l'application :
 - **Suppression d'événements** : Les organisateurs d'événements ont la possibilité de supprimer leurs événements.
 - **Consultation d'événements** : Tous les utilisateurs peuvent consulter les détails des événements.
 - **Recherche d'événements** : Les utilisateurs peuvent rechercher des événements spécifiques.
+
+## Aperçu
+
+### Page de connexion
+![Page de Connexion](/Page%20connexion.jpg)
+
+### Page de création d'événement
+![Page de Création d'événement](/Page%20creer%20evenement.jpg)
+
+### Page d'enregistrement
+![Page d'Enregistrement](/Page%20enregistrement.jpg)
+
+### Page événement
+![Page Événement](/Page%20evenement.jpg)
+
+### Page info et de tchat
+![Page de Chat](/Page%20info%20chat%20seulement.jpg)
+
+### Page de modification de compte
+![Page de Modification de Compte](/Page%20modifier%20compte.jpg)
+
+### Page de recherche
+![Page de Recherche](/Page%20recherche.png)
 
 ## Comment utiliser
 
